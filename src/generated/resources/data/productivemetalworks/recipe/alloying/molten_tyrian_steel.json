@@ -1,0 +1,56 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_crimson_steel"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_azure_electrum"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_shulker_shell"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_ancient_debris"
+      }
+    }
+  ],
+  "type": "productivemetalworks:fluid_alloying",
+  "fluids": [
+    {
+      "amount": 90,
+      "tag": "c:molten_crimson_steel"
+    },
+    {
+      "amount": 90,
+      "tag": "c:molten_azure_electrum"
+    },
+    {
+      "amount": 100,
+      "tag": "c:molten_shulker_shell"
+    },
+    {
+      "amount": 100,
+      "tag": "c:molten_ancient_debris"
+    }
+  ],
+  "result": {
+    "amount": 360,
+    "id": "sgearmetalworks:molten_tyrian_steel"
+  },
+  "speed": 1
+}

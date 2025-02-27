@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:storage_blocks/crimson_steel"
+      }
+    }
+  ],
+  "type": "productivemetalworks:item_melting",
+  "ingredient": {
+    "tag": "c:storage_blocks/crimson_steel"
+  },
+  "maximum_temperature": 0,
+  "minimum_temperature": 1000,
+  "result": [
+    {
+      "amount": 810,
+      "id": "sgearmetalworks:molten_crimson_steel"
+    }
+  ]
+}

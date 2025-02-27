@@ -1,0 +1,49 @@
+{
+  "type": "silentgear:simple",
+  "parent": "silentgear:empty",
+  "crafting": {
+    "can_salvage": true,
+    "categories": [
+      "gem",
+      "dust",
+      "casting"
+    ],
+    "gear_type_blacklist": [],
+    "ingredient": {
+      "tag": "c:dusts/redstone"
+    },
+    "part_substitutes": {}
+  },
+  "display": {
+    "color": "#FFBB0000",
+    "main_texture_type": "HIGH_CONTRAST",
+    "name": {
+      "translate": "material.silentgear.redstone"
+    },
+    "name_prefix": ""
+  },
+  "properties": {
+    "silentgear:tip": {
+      "attack_damage": {
+        "operation": "ADD",
+        "value": 2.0
+      },
+      "attack_speed": {
+        "operation": "ADD",
+        "value": 0.5
+      },
+      "harvest_speed": {
+        "operation": "MULTIPLY_TOTAL",
+        "value": 0.2
+      },
+      "ranged_damage": {
+        "operation": "ADD",
+        "value": 2.0
+      },
+      "rarity": {
+        "operation": "ADD",
+        "value": 10.0
+      }
+    }
+  }
+}

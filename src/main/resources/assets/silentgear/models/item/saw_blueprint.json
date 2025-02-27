@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "sgearmetalworks:item/silentgear/saw_blade_cast"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_azure_silver"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_gold"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_ender"
+      }
+    }
+  ],
+  "type": "productivemetalworks:fluid_alloying",
+  "fluids": [
+    {
+      "amount": 360,
+      "tag": "c:molten_azure_silver"
+    },
+    {
+      "amount": 180,
+      "tag": "c:molten_gold"
+    },
+    {
+      "amount": 100,
+      "tag": "c:molten_ender"
+    }
+  ],
+  "result": {
+    "amount": 90,
+    "id": "sgearmetalworks:molten_azure_electrum"
+  },
+  "speed": 1
+}

@@ -1,0 +1,23 @@
+{
+  "block.sgearmetalworks.molten_azure_electrum": "Molten Azure Electrum",
+  "block.sgearmetalworks.molten_azure_silver": "Molten Azure Silver",
+  "block.sgearmetalworks.molten_blaze_gold": "Molten Blaze Gold",
+  "block.sgearmetalworks.molten_crimson_iron": "Molten Crimson Iron",
+  "block.sgearmetalworks.molten_crimson_steel": "Molten Crimson Steel",
+  "block.sgearmetalworks.molten_tyrian_steel": "Molten Tyrian Steel",
+  "fluid_type.sgearmetalworks.molten_azure_electrum": "Molten Azure Electrum",
+  "fluid_type.sgearmetalworks.molten_azure_silver": "Molten Azure Silver",
+  "fluid_type.sgearmetalworks.molten_blaze_gold": "Molten Blaze Gold",
+  "fluid_type.sgearmetalworks.molten_crimson_iron": "Molten Crimson Iron",
+  "fluid_type.sgearmetalworks.molten_crimson_steel": "Molten Crimson Steel",
+  "fluid_type.sgearmetalworks.molten_tyrian_steel": "Molten Tyrian Steel",
+  "item.sgearmetalworks.molten_azure_electrum_bucket": "Bucket of Molten Azure Electrum",
+  "item.sgearmetalworks.molten_azure_silver_bucket": "Bucket of Molten Azure Silver",
+  "item.sgearmetalworks.molten_blaze_gold_bucket": "Bucket of Molten Blaze Gold",
+  "item.sgearmetalworks.molten_crimson_iron_bucket": "Bucket of Molten Crimson Iron",
+  "item.sgearmetalworks.molten_crimson_steel_bucket": "Bucket of Molten Crimson Steel",
+  "item.sgearmetalworks.molten_tyrian_steel_bucket": "Bucket of Molten Tyrian Steel",
+  "jei.sgearmetalworks.sg_casting": "Silent Gear Casting",
+  "material.group.silentgear.casting": "Casting",
+  "material.sgearmetalworks.meat": "Meat"
+}

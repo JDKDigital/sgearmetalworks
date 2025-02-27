@@ -1,0 +1,45 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_crimson_iron"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_blaze"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_magma_cream"
+      }
+    }
+  ],
+  "type": "productivemetalworks:fluid_alloying",
+  "fluids": [
+    {
+      "amount": 810,
+      "tag": "c:molten_crimson_iron"
+    },
+    {
+      "amount": 200,
+      "tag": "c:molten_blaze"
+    },
+    {
+      "amount": 100,
+      "tag": "c:molten_magma_cream"
+    }
+  ],
+  "result": {
+    "amount": 270,
+    "id": "sgearmetalworks:molten_crimson_steel"
+  },
+  "speed": 1
+}

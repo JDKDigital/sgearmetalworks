@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "sgearmetalworks:item/silentgear/helmet_plates_cast"
+  }
+}

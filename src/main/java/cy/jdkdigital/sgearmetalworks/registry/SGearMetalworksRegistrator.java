@@ -1,0 +1,95 @@
+package cy.jdkdigital.sgearmetalworks.registry;
+
+import cy.jdkdigital.productivemetalworks.common.block.HotLiquidBlock;
+import cy.jdkdigital.productivemetalworks.registry.MetalworksRegistrator;
+import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
+import cy.jdkdigital.sgearmetalworks.recipe.SilentGearCastingRecipe;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredHolder;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+public class SGearMetalworksRegistrator
+{
+    public static void register() {}
+
+    public static Map<String, Integer> FLUID_COLORS = new HashMap<>();
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> SG_GEAR_CASTING = SGearMetalworks.RECIPE_SERIALIZERS.register("sg_gear_casting", SilentGearCastingRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<SilentGearCastingRecipe>> SG_GEAR_CASTING_TYPE = SGearMetalworks.RECIPE_TYPES.register("sg_gear_casting", () -> new RecipeType<>() {});
+
+    public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_CRIMSON_IRON = registerFluid("molten_crimson_iron", 0xfff0466e);
+    public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_CRIMSON_STEEL = registerFluid("molten_crimson_steel", 0xffd9143b);
+    public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_BLAZE_GOLD = registerFluid("molten_blaze_gold", 0xffd94708);
+    public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_AZURE_SILVER = registerFluid("molten_azure_silver", 0xffcfa0f3);
+    public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_AZURE_ELECTRUM = registerFluid("molten_azure_electrum", 0xff0c21dd);
+    public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_TYRIAN_STEEL = registerFluid("molten_tyrian_steel", 0xffae107e);
+
+    public static DeferredHolder<Item, Item> registerItem(String name) {
+        return registerItem(name, () -> new Item(new Item.Properties()));
+    }
+
+    public static DeferredHolder<Item, Item> registerItem(String name, Supplier<Item> supplier) {
+        return SGearMetalworks.ITEMS.register(name, supplier);
+    }
+
+    public static DeferredHolder<Block, Block> registerBlock(String name, Supplier<Block> supplier, boolean hasItem) {
+        return registerBlock(name, supplier, hasItem ? new Item.Properties() : null);
+    }
+
+    public static DeferredHolder<Block, Block> registerBlock(String name, Supplier<Block> supplier, Item.Properties properties) {
+        var block = SGearMetalworks.BLOCKS.register(name, supplier);
+        if (properties != null) {
+            registerItem(name, () -> new BlockItem(block.get(), properties));
+        }
+        return block;
+    }
+
+    public static DeferredHolder<Fluid, BaseFlowingFluid.Source> registerFluid(String name, int color) {
+        FLUID_COLORS.put(name, color);
+        // fluid type
+        var TYPE = SGearMetalworks.FLUID_TYPES.register(name, () -> new FluidType(MetalworksRegistrator.MOLTEN_FLUID_TYPE_PROPERTIES));
+        // fluid
+        var MOLTEN = SGearMetalworks.FLUIDS.register(name, () -> new BaseFlowingFluid.Source(makeMoltenProperties(TYPE, name)));
+        // flowing fluid
+        SGearMetalworks.FLUIDS.register(String.format("flowing_%s", name), () -> new BaseFlowingFluid.Flowing(makeMoltenProperties(TYPE, name)));
+        // fluid bucket
+        registerItem(String.format("%s_bucket", name), () -> new BucketItem(MOLTEN.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+        // fluid block
+        registerBlock(name, () -> new HotLiquidBlock(MOLTEN.get(), Block.Properties.of()
+                .strength(100.0F)
+                .speedFactor(0.7F)
+                .noCollission()
+                .liquid()
+                .replaceable()
+        ), false);
+
+        return MOLTEN;
+    }
+
+    static private BaseFlowingFluid.Properties makeMoltenProperties(Supplier<? extends FluidType> fluidType, String name) {
+        return new BaseFlowingFluid.Properties(
+                fluidType,
+                DeferredHolder.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, name)),
+                DeferredHolder.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, String.format("flowing_%s", name)))
+        )
+                .bucket(DeferredHolder.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, String.format("%s_bucket", name))))
+                .block(DeferredHolder.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, name)))
+                .tickRate(30)
+                .slopeFindDistance(4)
+                .levelDecreasePerBlock(2);
+    }
+}
