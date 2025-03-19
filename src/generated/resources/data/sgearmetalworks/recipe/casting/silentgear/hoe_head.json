@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:hoe_blueprint"
+    "item": "sgearmetalworks:hoe_cast"
   },
   "consume_cast": false,
   "material": {

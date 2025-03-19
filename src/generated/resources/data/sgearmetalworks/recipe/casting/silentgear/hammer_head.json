@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:hammer_blueprint"
+    "item": "sgearmetalworks:hammer_cast"
   },
   "consume_cast": false,
   "material": {

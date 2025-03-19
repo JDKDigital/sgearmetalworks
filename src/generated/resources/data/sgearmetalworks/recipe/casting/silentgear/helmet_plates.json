@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:helmet_blueprint"
+    "item": "sgearmetalworks:helmet_cast"
   },
   "consume_cast": false,
   "material": {

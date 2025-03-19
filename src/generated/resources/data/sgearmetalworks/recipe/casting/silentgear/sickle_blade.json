@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:sickle_blueprint"
+    "item": "sgearmetalworks:sickle_cast"
   },
   "consume_cast": false,
   "material": {

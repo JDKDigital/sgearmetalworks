@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:arrow_blueprint"
+    "item": "sgearmetalworks:arrow_cast"
   },
   "consume_cast": false,
   "material": {

@@ -17,6 +17,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -121,10 +122,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
 
         // Iterate blueprints and use them as the cast
         GearItemSets.getIterator().forEachRemaining(gearItemSet -> {
+            var cast = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, gearItemSet.name() + "_cast")).getDefaultInstance();
+            ProductiveMetalworks.LOGGER.info("creating recipes for " + gearItemSet.name() + "_cast " + cast);
             // blueprint recipe
             if (!gearItemSet.partName().equals("mace_core") && !gearItemSet.partName().equals("elytra_wings")) {
-                ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", gearItemSet.partName())).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", gearItemSet.name() + "_blueprint")).getDefaultInstance(), true)
-                        .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath("silentgear", gearItemSet.name() + "_blueprint"));
+                ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", gearItemSet.partName())).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), cast, true)
+                        .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/" + gearItemSet.name() + "_cast"));
             }
             // casting recipe
             var amount = materialCost.get(gearItemSet.name());
@@ -132,19 +135,19 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 SilentGearCastingRecipeBuilder.of(Items.HEAVY_CORE.getDefaultInstance(), amount.getFirst(), amount.getSecond(), gearItemSet.mainPart().getDefaultInstance(), true)
                     .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/" + gearItemSet.partName()));
             } else if (!gearItemSet.partName().equals("elytra_wings")) {
-                SilentGearCastingRecipeBuilder.of(gearItemSet.blueprint().getDefaultInstance(), amount.getFirst(), amount.getSecond(), gearItemSet.mainPart().getDefaultInstance(), false)
+                SilentGearCastingRecipeBuilder.of(cast, amount.getFirst(), amount.getSecond(), gearItemSet.mainPart().getDefaultInstance(), false)
                     .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/" + gearItemSet.partName()));
             }
         });
-        SilentGearCastingRecipeBuilder.of(SgItems.ROD_BLUEPRINT.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.ROD.get(), CastingMaterialCategories.CASTING), 2, SgItems.ROD.get().getDefaultInstance(), false)
+        SilentGearCastingRecipeBuilder.of(SGearMetalworksRegistrator.CAST_TOOL_ROD.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.ROD.get(), CastingMaterialCategories.CASTING), 2, SgItems.ROD.get().getDefaultInstance(), false)
                 .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/tool_rod"));
-        SilentGearCastingRecipeBuilder.of(SgItems.TIP_BLUEPRINT.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.TIP.get(), CastingMaterialCategories.CASTING), 2, SgItems.TIP.get().getDefaultInstance(), false)
+        SilentGearCastingRecipeBuilder.of(SGearMetalworksRegistrator.CAST_TIP.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.TIP.get(), CastingMaterialCategories.CASTING), 2, SgItems.TIP.get().getDefaultInstance(), false)
                 .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/tip"));
 
-        ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", "rod")).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", "rod_blueprint")).getDefaultInstance(), true)
-                .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath("silentgear", "rod_blueprint"));
-        ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", "tip")).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", "tip_blueprint")).getDefaultInstance(), true)
-                .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath("silentgear", "tip_blueprint"));
+        ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", "rod")).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), SGearMetalworksRegistrator.CAST_TOOL_ROD.get().getDefaultInstance(), true)
+                .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/rod_cast"));
+        ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", "tip")).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), SGearMetalworksRegistrator.CAST_TIP.get().getDefaultInstance(), true)
+                .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/tip_cast"));
 
         ItemCastingRecipeBuilder.of(SgItems.NETHER_BANANA.get().getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_GOLD, 720), SgItems.GOLDEN_NETHER_BANANA.get().getDefaultInstance(), true)
                 .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/golden_nether_banana"));
@@ -192,6 +195,14 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         armorRecipes(recipeOutput, 8, GearItemSets.CHESTPLATE);
         armorRecipes(recipeOutput, 7, GearItemSets.LEGGINGS);
         armorRecipes(recipeOutput, 4, GearItemSets.BOOTS);
+
+        // Disable conversion recipes
+        for (String material: new String[]{"iron", "golden", "diamond", "netherite"}) {
+            for (String gear: new String[]{"axe", "boots", "chestplate", "helmet", "hoe", "leggings", "pickaxe", "shoves", "sword"}) {
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STICK).requires(Items.STICK).unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .save(recipeOutput.withConditions(new NotCondition(new ModLoadedCondition(SGearMetalworks.MODID))), ResourceLocation.fromNamespaceAndPath("silentgear", "gear/convert/" + material + "_" + gear));
+            }
+        }
     }
 
     private static ExtendedShapelessRecipeBuilder.Basic<ShapelessCompoundPartRecipe> compoundPart(DeferredItem<?> item, int count) {

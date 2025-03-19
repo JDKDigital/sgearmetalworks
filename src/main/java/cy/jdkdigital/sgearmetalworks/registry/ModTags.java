@@ -1,5 +1,6 @@
 package cy.jdkdigital.sgearmetalworks.registry;
 
+import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
@@ -16,7 +17,7 @@ public class ModTags
     public static class Items
     {
         public static final TagKey<Item> CASTS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "casts"));
-        public static final TagKey<Item> SG_BLUEPRINTS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("silentgear", "blueprints"));
+        public static final TagKey<Item> SG_CASTS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casts"));
         public static final TagKey<Item> INGOTS_MEAT = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "ingots/meat"));
     }
 

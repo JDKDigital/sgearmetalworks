@@ -69,6 +69,28 @@
         },
         {
           "conditions": [],
+          "level": 5,
+          "trait": "silentgear:flexible"
+        },
+        {
+          "conditions": [],
+          "level": 3,
+          "trait": "silentgear:yummy"
+        }
+      ]
+    },
+    "silentgear:tip": {
+      "durability": {
+        "operation": "ADD",
+        "value": 68.0
+      },
+      "harvest_speed": {
+        "operation": "ADD",
+        "value": -0.1
+      },
+      "traits": [
+        {
+          "conditions": [],
           "level": 3,
           "trait": "silentgear:yummy"
         }

@@ -26,7 +26,7 @@ public class ModEventHandler
 
     @SubscribeEvent
     public static void getCastingRecipe(CastingRecipeEvent event) {
-        if (event.isTable && event.cast.is(ModTags.Items.SG_BLUEPRINTS) || event.cast.is(Items.HEAVY_CORE)) {
+        if (event.isTable && event.cast.is(ModTags.Items.SG_CASTS) || event.cast.is(Items.HEAVY_CORE)) {
             var recipe = RecipeHelper.getSilentGearCastingRecipe(event.level, event.cast, event.fluid);
             if (recipe != null) {
                 event.setRecipe(recipe.value());

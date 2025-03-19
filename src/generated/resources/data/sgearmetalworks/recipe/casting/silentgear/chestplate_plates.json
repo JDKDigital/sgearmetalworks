@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:chestplate_blueprint"
+    "item": "sgearmetalworks:chestplate_cast"
   },
   "consume_cast": false,
   "material": {

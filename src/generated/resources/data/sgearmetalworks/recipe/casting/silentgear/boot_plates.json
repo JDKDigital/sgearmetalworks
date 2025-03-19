@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:boots_blueprint"
+    "item": "sgearmetalworks:boots_cast"
   },
   "consume_cast": false,
   "material": {

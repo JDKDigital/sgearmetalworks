@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:knife_blueprint"
+    "item": "sgearmetalworks:knife_cast"
   },
   "consume_cast": false,
   "material": {

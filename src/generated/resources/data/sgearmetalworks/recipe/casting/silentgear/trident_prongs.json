@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:trident_blueprint"
+    "item": "sgearmetalworks:trident_cast"
   },
   "consume_cast": false,
   "material": {

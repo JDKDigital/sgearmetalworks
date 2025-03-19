@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "#silentgear:blueprints",
-      "required": false
-    }
+    "#sgearmetalworks:casts"
   ]
 }

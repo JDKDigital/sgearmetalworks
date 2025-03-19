@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:sword_blueprint"
+    "item": "sgearmetalworks:sword_cast"
   },
   "consume_cast": false,
   "material": {

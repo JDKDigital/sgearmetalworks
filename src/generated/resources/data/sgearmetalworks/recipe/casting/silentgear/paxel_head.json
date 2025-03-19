@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:paxel_blueprint"
+    "item": "sgearmetalworks:paxel_cast"
   },
   "consume_cast": false,
   "material": {

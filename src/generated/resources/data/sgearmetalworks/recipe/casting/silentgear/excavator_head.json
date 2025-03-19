@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:excavator_blueprint"
+    "item": "sgearmetalworks:excavator_cast"
   },
   "consume_cast": false,
   "material": {

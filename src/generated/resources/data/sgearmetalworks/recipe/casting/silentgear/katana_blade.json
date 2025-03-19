@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:katana_blueprint"
+    "item": "sgearmetalworks:katana_cast"
   },
   "consume_cast": false,
   "material": {

@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:machete_blueprint"
+    "item": "sgearmetalworks:machete_cast"
   },
   "consume_cast": false,
   "material": {

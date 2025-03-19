@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:axe_blueprint"
+    "item": "sgearmetalworks:axe_cast"
   },
   "consume_cast": false,
   "material": {

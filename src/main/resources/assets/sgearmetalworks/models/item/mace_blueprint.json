@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "sgearmetalworks:item/silentgear/mace_core_cast"
-  }
-}

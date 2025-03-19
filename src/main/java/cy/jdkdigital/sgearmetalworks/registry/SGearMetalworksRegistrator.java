@@ -38,6 +38,42 @@ public class SGearMetalworksRegistrator
     public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_AZURE_ELECTRUM = registerFluid("molten_azure_electrum", 0xff0c21dd);
     public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_TYRIAN_STEEL = registerFluid("molten_tyrian_steel", 0xffae107e);
 
+    public static DeferredHolder<Item, Item> CAST_SWORD = registerItem("sword_cast");
+    public static DeferredHolder<Item, Item> CAST_KATANA = registerItem("katana_cast");
+    public static DeferredHolder<Item, Item> CAST_MACHETE = registerItem("machete_cast");
+    public static DeferredHolder<Item, Item> CAST_SPEAR = registerItem("spear_cast");
+    public static DeferredHolder<Item, Item> CAST_TRIDENT = registerItem("trident_cast");
+    public static DeferredHolder<Item, Item> CAST_KNIFE = registerItem("knife_cast");
+    public static DeferredHolder<Item, Item> CAST_DAGGER = registerItem("dagger_cast");
+    public static DeferredHolder<Item, Item> CAST_PICKAXE = registerItem("pickaxe_cast");
+    public static DeferredHolder<Item, Item> CAST_SHOVEL = registerItem("shovel_cast");
+    public static DeferredHolder<Item, Item> CAST_AXE = registerItem("axe_cast");
+    public static DeferredHolder<Item, Item> CAST_PAXEL = registerItem("paxel_cast");
+    public static DeferredHolder<Item, Item> CAST_HAMMER = registerItem("hammer_cast");
+    public static DeferredHolder<Item, Item> CAST_EXCAVATOR = registerItem("excavator_cast");
+    public static DeferredHolder<Item, Item> CAST_HOE = registerItem("hoe_cast");
+    public static DeferredHolder<Item, Item> CAST_MATTOCK = registerItem("mattock_cast");
+    public static DeferredHolder<Item, Item> CAST_PROSPECTOR_HAMMER = registerItem("prospector_hammer_cast");
+    public static DeferredHolder<Item, Item> CAST_SAW = registerItem("saw_cast");
+    public static DeferredHolder<Item, Item> CAST_SICKLE = registerItem("sickle_cast");
+    public static DeferredHolder<Item, Item> CAST_SHEARS = registerItem("shears_cast");
+    public static DeferredHolder<Item, Item> CAST_FISHING_ROD = registerItem("fishing_rod_cast");
+    public static DeferredHolder<Item, Item> CAST_BOW = registerItem("bow_cast");
+    public static DeferredHolder<Item, Item> CAST_CROSSBOW = registerItem("crossbow_cast");
+    public static DeferredHolder<Item, Item> CAST_SLINGSHOT = registerItem("slingshot_cast");
+    public static DeferredHolder<Item, Item> CAST_ARROW = registerItem("arrow_cast");
+    public static DeferredHolder<Item, Item> CAST_RING = registerItem("ring_cast");
+    public static DeferredHolder<Item, Item> CAST_BRACELET = registerItem("bracelet_cast");
+    public static DeferredHolder<Item, Item> CAST_NECKLACE = registerItem("necklace_cast");
+    public static DeferredHolder<Item, Item> CAST_HELMET = registerItem("helmet_cast");
+    public static DeferredHolder<Item, Item> CAST_CHESTPLATE = registerItem("chestplate_cast");
+    public static DeferredHolder<Item, Item> CAST_LEGGINGS = registerItem("leggings_cast");
+    public static DeferredHolder<Item, Item> CAST_BOOTS = registerItem("boots_cast");
+    public static DeferredHolder<Item, Item> CAST_SHIELD = registerItem("shield_cast");
+    public static DeferredHolder<Item, Item> CAST_TOOL_ROD = registerItem("tool_rod_cast");
+    public static DeferredHolder<Item, Item> CAST_TIP = registerItem("tip_cast");
+
+
     public static DeferredHolder<Item, Item> registerItem(String name) {
         return registerItem(name, () -> new Item(new Item.Properties()));
     }

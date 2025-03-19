@@ -91,7 +91,13 @@ public class MaterialsProvider extends MaterialsProviderBase
                 //rod
                 .stat(PartTypes.ROD, GearProperties.HARVEST_SPEED, -0.1f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .trait(PartTypes.ROD, Const.Traits.ORGANIC, 2)
+                .trait(PartTypes.ROD, Const.Traits.FLEXIBLE, 5)
                 .trait(PartTypes.ROD, Const.Traits.YUMMY, 3)
+                //tip
+                .stat(PartTypes.TIP, GearProperties.DURABILITY, 68, NumberProperty.Operation.ADD)
+                .harvestTierBuiltin(PartTypes.TIP)
+                .stat(PartTypes.TIP, GearProperties.HARVEST_SPEED, -0.1f, NumberProperty.Operation.ADD)
+                .trait(PartTypes.TIP, Const.Traits.YUMMY, 3)
         );
 
         return materials;

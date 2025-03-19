@@ -7,7 +7,7 @@
   ],
   "type": "sgearmetalworks:sg_gear_casting",
   "cast": {
-    "item": "silentgear:slingshot_blueprint"
+    "item": "sgearmetalworks:slingshot_cast"
   },
   "consume_cast": false,
   "material": {
