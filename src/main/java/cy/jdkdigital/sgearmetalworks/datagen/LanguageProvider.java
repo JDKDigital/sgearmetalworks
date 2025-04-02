@@ -17,6 +17,7 @@ public class LanguageProvider extends net.neoforged.neoforge.common.data.Languag
     protected void addTranslations() {
         add("jei." + SGearMetalworks.MODID + ".sg_casting", "Silent Gear Casting");
         add("material.group.silentgear.casting", "Casting");
+        add("material.group.silentgear.crude", "Crude");
         add("material." + SGearMetalworks.MODID + ".meat", "Meat");
 
         SGearMetalworks.ITEMS.getEntries().forEach(registryObject -> {

@@ -1,0 +1,41 @@
+{
+  "type": "silentgear:gear_crafting",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "type": "silentgear:blueprint",
+      "gear_type": "silentgear:shield",
+      "part_type": "silentgear:main"
+    },
+    [
+      {
+        "item": "silentgear:alloy_ingot"
+      },
+      {
+        "item": "silentgear:super_alloy"
+      },
+      {
+        "item": "silentgear:hybrid_gem"
+      }
+    ],
+    [
+      {
+        "item": "silentgear:alloy_ingot"
+      },
+      {
+        "item": "silentgear:super_alloy"
+      },
+      {
+        "item": "silentgear:hybrid_gem"
+      }
+    ],
+    {
+      "type": "silentgear:part_type",
+      "part_type": "silentgear:rod"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "silentgear:shield"
+  }
+}

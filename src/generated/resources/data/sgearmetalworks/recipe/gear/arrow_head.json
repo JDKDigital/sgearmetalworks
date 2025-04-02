@@ -1,0 +1,26 @@
+{
+  "type": "silentgear:compound_part",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "type": "silentgear:blueprint",
+      "gear_type": "silentgear:arrow",
+      "part_type": "silentgear:main"
+    },
+    [
+      {
+        "item": "silentgear:alloy_ingot"
+      },
+      {
+        "item": "silentgear:super_alloy"
+      },
+      {
+        "item": "silentgear:hybrid_gem"
+      }
+    ]
+  ],
+  "result": {
+    "count": 1,
+    "id": "silentgear:arrow_heads"
+  }
+}

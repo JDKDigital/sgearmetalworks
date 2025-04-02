@@ -1,0 +1,51 @@
+{
+  "type": "silentgear:compound_part",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "type": "silentgear:blueprint",
+      "gear_type": "silentgear:mace",
+      "part_type": "silentgear:main"
+    },
+    {
+      "item": "minecraft:heavy_core"
+    },
+    [
+      {
+        "item": "silentgear:alloy_ingot"
+      },
+      {
+        "item": "silentgear:super_alloy"
+      },
+      {
+        "item": "silentgear:hybrid_gem"
+      }
+    ],
+    [
+      {
+        "item": "silentgear:alloy_ingot"
+      },
+      {
+        "item": "silentgear:super_alloy"
+      },
+      {
+        "item": "silentgear:hybrid_gem"
+      }
+    ],
+    [
+      {
+        "item": "silentgear:alloy_ingot"
+      },
+      {
+        "item": "silentgear:super_alloy"
+      },
+      {
+        "item": "silentgear:hybrid_gem"
+      }
+    ]
+  ],
+  "result": {
+    "count": 1,
+    "id": "silentgear:mace_core"
+  }
+}

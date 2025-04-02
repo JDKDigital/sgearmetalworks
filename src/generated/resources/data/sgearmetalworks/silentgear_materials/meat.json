@@ -46,6 +46,11 @@
       "traits": [
         {
           "conditions": [],
+          "level": 2,
+          "trait": "silentgear:organic"
+        },
+        {
+          "conditions": [],
           "level": 3,
           "trait": "silentgear:bending"
         },
@@ -76,6 +81,11 @@
           "conditions": [],
           "level": 3,
           "trait": "silentgear:yummy"
+        },
+        {
+          "conditions": [],
+          "level": 1,
+          "trait": "silentgear:bulky"
         }
       ]
     },
@@ -93,6 +103,11 @@
           "conditions": [],
           "level": 3,
           "trait": "silentgear:yummy"
+        },
+        {
+          "conditions": [],
+          "level": 3,
+          "trait": "silentgear:soft"
         }
       ]
     }

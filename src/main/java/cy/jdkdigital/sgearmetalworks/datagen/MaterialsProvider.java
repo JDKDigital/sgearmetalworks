@@ -8,6 +8,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
 import net.silentchaos512.gear.SilentGear;
@@ -86,6 +87,7 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .mainStatsMelee(3, 2, -0.4f)
                 .mainStatsRanged(0, -0.4f, 0.7f, 0.7f)
                 .mainStatsArmor(3, 8, 6, 3, 4, 8) //20
+                .trait(PartTypes.MAIN, Const.Traits.ORGANIC, 2)
                 .trait(PartTypes.MAIN, Const.Traits.BENDING, 3)
                 .trait(PartTypes.MAIN, Const.Traits.YUMMY, 3)
                 //rod
@@ -93,11 +95,55 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .trait(PartTypes.ROD, Const.Traits.ORGANIC, 2)
                 .trait(PartTypes.ROD, Const.Traits.FLEXIBLE, 5)
                 .trait(PartTypes.ROD, Const.Traits.YUMMY, 3)
+                .trait(PartTypes.ROD, Const.Traits.BULKY, 1)
                 //tip
                 .stat(PartTypes.TIP, GearProperties.DURABILITY, 68, NumberProperty.Operation.ADD)
                 .harvestTierBuiltin(PartTypes.TIP)
                 .stat(PartTypes.TIP, GearProperties.HARVEST_SPEED, -0.1f, NumberProperty.Operation.ADD)
                 .trait(PartTypes.TIP, Const.Traits.YUMMY, 3)
+                .trait(PartTypes.TIP, Const.Traits.SOFT, 3)
+        );
+
+        // Flint
+        materials.add(MaterialBuilder.builtin(BuiltinMaterials.FLINT)
+                .crafting(Items.FLINT, MaterialCategories.ROCK, MaterialCategories.BASIC)
+                .displayWithDefaultName(0x969696, TextureType.HIGH_CONTRAST)
+                //main
+                .mainStatsCommon(124, 4, 3, 6, 0.8f)
+                .mainStatsHarvest(5)
+                .mainStatsMelee(2, 0, -0.1f)
+                .mainStatsRanged(1, -0.3f, 1.0f, 1.0f)
+                .mainStatsArmor(0.5f, 2f, 1f, 0.5f, 0, 0) //4
+                .trait(PartTypes.MAIN, Const.Traits.JAGGED, 3)
+                //rod
+                .trait(PartTypes.ROD, Const.Traits.BRITTLE, 3)
+                .trait(PartTypes.ROD, Const.Traits.JAGGED, 2)
+                //tip
+                .stat(PartTypes.TIP, GearProperties.DURABILITY, 31, NumberProperty.Operation.ADD)
+                //setting (deliberately has no traits lol)
+                .noProperties(PartTypes.SETTING)
+        );
+
+        // Bone
+        materials.add(MaterialBuilder.builtin(BuiltinMaterials.BONE)
+                .crafting(new MaterialCraftingData(
+                        Ingredient.of(Items.BONE_BLOCK),
+                        List.of(MaterialCategories.ORGANIC, MaterialCategories.BASIC, CastingMaterialCategories.CRUDE),
+                        List.of(),
+                        Map.of(PartTypes.ROD.get(), Ingredient.of(Items.BONE)),
+                        true
+                ))
+                .displayWithDefaultName(0xFCFBED, TextureType.LOW_CONTRAST)
+                //main
+                .mainStatsCommon(108, 4, 5, 8, 0.9f)
+                .mainStatsHarvest(4)
+                .mainStatsMelee(2, 1, 0.1f)
+                .mainStatsRanged(1f, 0f, 0.9f, 1f)
+                .mainStatsArmor(1, 2, 1, 1, 0, 1) //5
+                .trait(PartTypes.MAIN, Const.Traits.CHIPPING, 2)
+                //rod
+                .stat(PartTypes.ROD, GearProperties.ATTACK_DAMAGE, 0.2f, NumberProperty.Operation.MULTIPLY_TOTAL)
+                .trait(PartTypes.ROD, Const.Traits.FLEXIBLE, 2)
         );
 
         return materials;

@@ -34,6 +34,7 @@ import net.silentchaos512.gear.SilentGear;
 import net.silentchaos512.gear.crafting.ingredient.BlueprintIngredient;
 import net.silentchaos512.gear.crafting.ingredient.GearPartIngredient;
 import net.silentchaos512.gear.crafting.ingredient.PartMaterialIngredient;
+import net.silentchaos512.gear.crafting.recipe.ShapedGearRecipe;
 import net.silentchaos512.gear.crafting.recipe.ShapelessCompoundPartRecipe;
 import net.silentchaos512.gear.crafting.recipe.ShapelessGearRecipe;
 import net.silentchaos512.gear.gear.material.MaterialCategories;
@@ -42,8 +43,10 @@ import net.silentchaos512.gear.item.MainPartItem;
 import net.silentchaos512.gear.item.gear.GearArmorItem;
 import net.silentchaos512.gear.setup.GearItemSets;
 import net.silentchaos512.gear.setup.SgItems;
+import net.silentchaos512.gear.setup.SgTags;
 import net.silentchaos512.gear.setup.gear.GearTypes;
 import net.silentchaos512.gear.setup.gear.PartTypes;
+import net.silentchaos512.lib.data.recipe.ExtendedShapedRecipeBuilder;
 import net.silentchaos512.lib.data.recipe.ExtendedShapelessRecipeBuilder;
 import net.silentchaos512.lib.util.NameUtils;
 
@@ -123,8 +126,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         // Iterate blueprints and use them as the cast
         GearItemSets.getIterator().forEachRemaining(gearItemSet -> {
             var cast = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, gearItemSet.name() + "_cast")).getDefaultInstance();
-            ProductiveMetalworks.LOGGER.info("creating recipes for " + gearItemSet.name() + "_cast " + cast);
-            // blueprint recipe
+            // cast recipe
             if (!gearItemSet.partName().equals("mace_core") && !gearItemSet.partName().equals("elytra_wings")) {
                 ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", gearItemSet.partName())).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), cast, true)
                         .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/" + gearItemSet.name() + "_cast"));
@@ -144,9 +146,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         SilentGearCastingRecipeBuilder.of(SGearMetalworksRegistrator.CAST_TIP.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.TIP.get(), CastingMaterialCategories.CASTING), 2, SgItems.TIP.get().getDefaultInstance(), false)
                 .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/tip"));
 
-        ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", "rod")).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), SGearMetalworksRegistrator.CAST_TOOL_ROD.get().getDefaultInstance(), true)
+        ItemCastingRecipeBuilder.of(SgItems.ROD.get().getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), SGearMetalworksRegistrator.CAST_TOOL_ROD.get().getDefaultInstance(), true)
                 .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/rod_cast"));
-        ItemCastingRecipeBuilder.of(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("silentgear", "tip")).getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), SGearMetalworksRegistrator.CAST_TIP.get().getDefaultInstance(), true)
+        ItemCastingRecipeBuilder.of(SgItems.TIP.get().getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), SGearMetalworksRegistrator.CAST_TIP.get().getDefaultInstance(), true)
                 .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/tip_cast"));
 
         ItemCastingRecipeBuilder.of(SgItems.NETHER_BANANA.get().getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_GOLD, 720), SgItems.GOLDEN_NETHER_BANANA.get().getDefaultInstance(), true)
@@ -185,16 +187,22 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         curioRecipes(recipeOutput, "bracelet", 3, GearItemSets.BRACELET);
         curioRecipes(recipeOutput, "necklace", 3, GearItemSets.NECKLACE);
 
+        armorRecipes(recipeOutput, 5, GearItemSets.HELMET);
+        armorRecipes(recipeOutput, 8, GearItemSets.CHESTPLATE);
+        armorRecipes(recipeOutput, 7, GearItemSets.LEGGINGS);
+        armorRecipes(recipeOutput, 4, GearItemSets.BOOTS);
+
         shapelessGear(RecipeCategory.COMBAT, GearItemSets.SHIELD.gearItem())
                 .requires(BlueprintIngredient.of(GearItemSets.SHIELD))
                 .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.ARMOR.get()), 2)
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .save(recipeOutput, SilentGear.getId("gear/shield"));
-
-        armorRecipes(recipeOutput, 5, GearItemSets.HELMET);
-        armorRecipes(recipeOutput, 8, GearItemSets.CHESTPLATE);
-        armorRecipes(recipeOutput, 7, GearItemSets.LEGGINGS);
-        armorRecipes(recipeOutput, 4, GearItemSets.BOOTS);
+        // alloy shield parts
+        shapelessGear(RecipeCategory.TOOLS, GearItemSets.SHIELD.gearItem())
+                .requires(BlueprintIngredient.of(GearItemSets.SHIELD))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 2)
+                .requires(GearPartIngredient.of(PartTypes.ROD.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/alloy_shield"));
 
         // Disable conversion recipes
         for (String material: new String[]{"iron", "golden", "diamond", "netherite"}) {
@@ -203,6 +211,48 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                         .save(recipeOutput.withConditions(new NotCondition(new ModLoadedCondition(SGearMetalworks.MODID))), ResourceLocation.fromNamespaceAndPath("silentgear", "gear/convert/" + material + "_" + gear));
             }
         }
+
+        // Rough recipes
+        shapedGear(RecipeCategory.COMBAT, GearItemSets.SWORD.gearItem())
+                .pattern("#")
+                .pattern("#")
+                .pattern("/")
+                .define('#', PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING))
+                .define('/', SgTags.Items.RODS_ROUGH)
+                .save(recipeOutput, SilentGear.getId("gear/rough/sword"));
+        shapedGear(RecipeCategory.COMBAT, GearItemSets.DAGGER.gearItem())
+                .pattern("#")
+                .pattern("/")
+                .define('#', PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING))
+                .define('/', SgTags.Items.RODS_ROUGH)
+                .save(recipeOutput, SilentGear.getId("gear/rough/dagger"));
+        shapedGear(RecipeCategory.COMBAT, GearItemSets.KNIFE.gearItem())
+                .pattern(" #")
+                .pattern("/ ")
+                .define('#', PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING))
+                .define('/', SgTags.Items.RODS_ROUGH)
+                .save(recipeOutput, SilentGear.getId("gear/rough/knife"));
+        shapedGear(RecipeCategory.TOOLS, GearItemSets.PICKAXE.gearItem())
+                .pattern("###")
+                .pattern(" / ")
+                .pattern(" / ")
+                .define('#', PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING))
+                .define('/', SgTags.Items.RODS_ROUGH)
+                .save(recipeOutput, SilentGear.getId("gear/rough/pickaxe"));
+        shapedGear(RecipeCategory.TOOLS, GearItemSets.SHOVEL.gearItem())
+                .pattern("#")
+                .pattern("/")
+                .pattern("/")
+                .define('#', PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING))
+                .define('/', SgTags.Items.RODS_ROUGH)
+                .save(recipeOutput, SilentGear.getId("gear/rough/shovel"));
+        shapedGear(RecipeCategory.TOOLS, GearItemSets.AXE.gearItem())
+                .pattern("##")
+                .pattern("#/")
+                .pattern(" /")
+                .define('#', PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING))
+                .define('/', SgTags.Items.RODS_ROUGH)
+                .save(recipeOutput, SilentGear.getId("gear/rough/axe"));
     }
 
     private static ExtendedShapelessRecipeBuilder.Basic<ShapelessCompoundPartRecipe> compoundPart(DeferredItem<?> item, int count) {
@@ -219,6 +269,16 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 .requires(BlueprintIngredient.of(SgItems.TIP_BLUEPRINT.get()))
                 .requires(PartMaterialIngredient.of(PartTypes.TIP.get()).not(CastingMaterialCategories.CASTING))
                 .save(consumer, SilentGear.getId("part/tip"));
+
+        // alloy tip and rod
+        shapelessPart(RecipeCategory.TOOLS, SgItems.ROD)
+                .requires(BlueprintIngredient.of(SgItems.ROD_BLUEPRINT.get()))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 2)
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "part/rod"));
+        shapelessPart(RecipeCategory.TOOLS, SgItems.TIP)
+                .requires(BlueprintIngredient.of(SgItems.TIP_BLUEPRINT.get()))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "part/tip"));
     }
 
     private static void toolRecipes(RecipeOutput consumer, String name, int mainCount, GearItemSet<?> itemSet) {
@@ -234,6 +294,11 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 .requires(ingredient, mainCount)
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .save(consumer, SilentGear.getId("gear/" + name + "_quick"));
+        // alloy gear parts
+        shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
+                .requires(BlueprintIngredient.of(itemSet))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + name + "_head"));
     }
 
     private static void maceRecipes(RecipeOutput output) {
@@ -249,6 +314,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING), 3)
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .save(output, SilentGear.getId("gear/mace_quick"));
+        // alloy gear parts
+        shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
+                .requires(BlueprintIngredient.of(itemSet))
+                .requires(Items.HEAVY_CORE)
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 3)
+                .save(output, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/mace_core"));
     }
 
     private static void bowRecipes(RecipeOutput consumer, String name, int mainCount, GearItemSet<?> itemSet) {
@@ -264,13 +335,17 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .requires(GearPartIngredient.of(PartTypes.CORD.get()))
                 .save(consumer, SilentGear.getId("gear/" + name + "_quick"));
+        // alloy gear parts
+        shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
+                .requires(BlueprintIngredient.of(itemSet))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + name + "_main"));
     }
 
     private static void arrowRecipes(RecipeOutput consumer, String name, GearItemSet<?> itemSet) {
-        BlueprintIngredient blueprint = BlueprintIngredient.of(itemSet);
         // Arrow head
         shapelessPart(RecipeCategory.COMBAT, itemSet.mainPart())
-                .requires(blueprint)
+                .requires(BlueprintIngredient.of(itemSet))
                 .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.PROJECTILE.get()).not(CastingMaterialCategories.CASTING))
                 .save(consumer, SilentGear.getId("gear/" + name + "_head"));
         // Quick arrows
@@ -280,6 +355,11 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .requires(GearPartIngredient.of(PartTypes.FLETCHING.get()))
                 .save(consumer, SilentGear.getId("gear/" + name + "_quick"));
+        // alloy gear parts
+        shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
+                .requires(BlueprintIngredient.of(itemSet))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + name + "_head"));
     }
 
     private static void armorRecipes(RecipeOutput consumer, int mainCount, GearItemSet<? extends GearArmorItem> itemSet) {
@@ -287,19 +367,33 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 .requires(BlueprintIngredient.of(itemSet))
                 .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), itemSet.gearItem().getGearType()).not(CastingMaterialCategories.CASTING), mainCount)
                 .save(consumer, SilentGear.getId("gear/" + NameUtils.fromItem(itemSet.mainPart()).getPath()));
+        // alloy gear parts
+        shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
+                .requires(BlueprintIngredient.of(itemSet))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + NameUtils.fromItem(itemSet.mainPart()).getPath() + "_head"));
     }
 
     private static void curioRecipes(RecipeOutput consumer, String name, int mainCount, GearItemSet<?> itemSet) {
         shapelessPart(RecipeCategory.MISC, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), MaterialCategories.METAL).not(CastingMaterialCategories.CASTING), mainCount)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), MaterialCategories.METAL, CastingMaterialCategories.CRUDE).not(CastingMaterialCategories.CASTING), mainCount)
                 .save(consumer, SilentGear.getId("gear/" + name + "_main_only"));
 
         shapelessGear(RecipeCategory.MISC, itemSet.gearItem())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), MaterialCategories.METAL).not(CastingMaterialCategories.CASTING), mainCount)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), MaterialCategories.METAL, CastingMaterialCategories.CRUDE).not(CastingMaterialCategories.CASTING), mainCount)
                 .requires(GearPartIngredient.of(PartTypes.SETTING.get()))
                 .save(consumer, SilentGear.getId("gear/" + name + "_quick"));
+        // alloy gear parts
+        shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
+                .requires(BlueprintIngredient.of(itemSet))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + name + "_main_only"));
+    }
+
+    private static ExtendedShapedRecipeBuilder.Basic<ShapedGearRecipe> shapedGear(RecipeCategory category, ItemLike item) {
+        return new ExtendedShapedRecipeBuilder.Basic<>(category, new ItemStack(item), ShapedGearRecipe::new);
     }
 
     private static ExtendedShapelessRecipeBuilder.Basic<ShapelessCompoundPartRecipe> shapelessPart(RecipeCategory category, ItemLike item) {

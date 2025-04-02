@@ -11,7 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public enum CastingMaterialCategories implements IMaterialCategory {
-    CASTING;
+    CASTING,
+    CRUDE;
 
     private static final Map<String, IMaterialCategory> CACHE = new HashMap<>();
 

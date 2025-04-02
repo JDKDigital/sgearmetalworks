@@ -10,7 +10,8 @@
     {
       "type": "silentgear:material",
       "categories": [
-        "metal"
+        "metal",
+        "crude"
       ],
       "gear_type": "silentgear:curio",
       "not_categories": [
@@ -21,7 +22,8 @@
     {
       "type": "silentgear:material",
       "categories": [
-        "metal"
+        "metal",
+        "crude"
       ],
       "gear_type": "silentgear:curio",
       "not_categories": [
@@ -32,7 +34,8 @@
     {
       "type": "silentgear:material",
       "categories": [
-        "metal"
+        "metal",
+        "crude"
       ],
       "gear_type": "silentgear:curio",
       "not_categories": [
