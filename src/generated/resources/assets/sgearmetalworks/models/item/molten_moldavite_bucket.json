@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket_drip",
+  "fluid": "sgearmetalworks:molten_moldavite",
+  "loader": "neoforge:fluid_container"
+}

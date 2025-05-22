@@ -3,6 +3,7 @@ package cy.jdkdigital.sgearmetalworks.datagen;
 import com.mojang.datafixers.util.Pair;
 import cy.jdkdigital.productivelib.crafting.condition.FluidTagEmptyCondition;
 import cy.jdkdigital.productivemetalworks.ProductiveMetalworks;
+import cy.jdkdigital.productivemetalworks.datagen.recipe.BlockCastingRecipeBuilder;
 import cy.jdkdigital.productivemetalworks.datagen.recipe.FluidAlloyingRecipeBuilder;
 import cy.jdkdigital.productivemetalworks.datagen.recipe.ItemCastingRecipeBuilder;
 import cy.jdkdigital.productivemetalworks.datagen.recipe.ItemMeltingRecipeBuilder;
@@ -19,10 +20,12 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
@@ -46,6 +49,7 @@ import net.silentchaos512.gear.setup.SgItems;
 import net.silentchaos512.gear.setup.SgTags;
 import net.silentchaos512.gear.setup.gear.GearTypes;
 import net.silentchaos512.gear.setup.gear.PartTypes;
+import net.silentchaos512.gems.util.Gems;
 import net.silentchaos512.lib.data.recipe.ExtendedShapedRecipeBuilder;
 import net.silentchaos512.lib.data.recipe.ExtendedShapelessRecipeBuilder;
 import net.silentchaos512.lib.util.NameUtils;
@@ -79,8 +83,31 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         cy.jdkdigital.productivemetalworks.datagen.RecipeProvider.metalCompat(SGearMetalworks.MODID, SG_METALS, recipeOutput);
         cy.jdkdigital.productivemetalworks.datagen.RecipeProvider.modMetalCompat("silentgear", SG_METALS, recipeOutput);
 
+        sgemsCompat(recipeOutput);
+
         gearCasting(recipeOutput);
         gearCrafting(recipeOutput);
+    }
+
+    private void sgemsCompat(RecipeOutput recipeOutput) {
+        for(Gems gem: Gems.values()) {
+            var fluid = BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "molten_" + gem.getName()));
+            var fluidTag = FluidTags.create(ResourceLocation.fromNamespaceAndPath("c", "molten_" + gem.getName()));
+
+            // melt ore, block, gem
+            ItemMeltingRecipeBuilder.of(Ingredient.of(gem.getBlockItemTag()), new FluidStack(fluid, 900))
+                    .save(recipeOutput.withConditions(new ModLoadedCondition("silentgems")), ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "melting/storage_blocks/" + gem.getName() + "_block"));
+            ItemMeltingRecipeBuilder.of(Ingredient.of(gem.getOreItemTag()), new FluidStack(fluid, 300))
+                    .save(recipeOutput.withConditions(new ModLoadedCondition("silentgems")), ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "melting/ores/" + gem.getName()));
+            ItemMeltingRecipeBuilder.of(Ingredient.of(gem.getItemTag()), new FluidStack(fluid, 100))
+                    .save(recipeOutput.withConditions(new ModLoadedCondition("silentgems")), ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "melting/gems/" + gem.getName()));
+
+            // cast block, gem
+            BlockCastingRecipeBuilder.of(SizedFluidIngredient.of(fluidTag, 900), gem.getBlock().asItem().getDefaultInstance())
+                    .save(recipeOutput.withConditions(new ModLoadedCondition("silentgems")), ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "casting/storage_blocks/" + gem.getName()));
+            ItemCastingRecipeBuilder.of(MetalworksRegistrator.CAST_GEM.get().getDefaultInstance(), SizedFluidIngredient.of(fluidTag, 100), gem.getItem().getDefaultInstance())
+                    .save(recipeOutput.withConditions(new ModLoadedCondition("silentgems")), ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "casting/gems/" + gem.getName()));
+        }
     }
 
     private static void gearCasting(RecipeOutput recipeOutput) {

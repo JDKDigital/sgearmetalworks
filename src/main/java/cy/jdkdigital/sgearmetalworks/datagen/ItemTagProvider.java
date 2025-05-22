@@ -4,10 +4,14 @@ import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
 import cy.jdkdigital.sgearmetalworks.registry.ModTags;
 import cy.jdkdigital.sgearmetalworks.registry.SGearMetalworksRegistrator;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.silentchaos512.gear.SilentGear;
+import net.silentchaos512.gear.setup.SgItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -56,6 +60,10 @@ public class ItemTagProvider extends ItemTagsProvider
                 SGearMetalworksRegistrator.CAST_TOOL_ROD.get(),
                 SGearMetalworksRegistrator.CAST_TIP.get()
         );
+
+        for(String s: new String[]{"rod", "pickaxe", "axe", "shovel", "sword", "sickle", "saw", "knife", "katana", "hoe", "bow", "crossbow", "shield", "helmet", "chestplate", "leggings", "boots", "bracelet", "necklace", "ring", "shears", "tip", "arrow", "machete", "trident", "spear", "dagger", "fishing_rod", "mattock", "slingshot", "mace", "hammer", "paxel", "excavator", "prospector_hammer"}) {
+            tag(ModTags.Items.BLUEPRINT_OVERRIDE).add(BuiltInRegistries.ITEM.get(SilentGear.getId(s + "_blueprint")));
+        }
     }
 
     @Override

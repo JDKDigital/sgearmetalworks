@@ -5,11 +5,13 @@ import cy.jdkdigital.productivemetalworks.registry.MetalworksRegistrator;
 import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
 import cy.jdkdigital.sgearmetalworks.registry.ModTags;
 import cy.jdkdigital.sgearmetalworks.util.RecipeHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 @EventBusSubscriber(modid = SGearMetalworks.MODID, bus = EventBusSubscriber.Bus.MOD)

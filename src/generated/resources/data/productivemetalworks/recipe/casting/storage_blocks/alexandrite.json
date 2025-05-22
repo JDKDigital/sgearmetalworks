@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "silentgems"
+    }
+  ],
+  "type": "productivemetalworks:block_casting",
+  "cast": [],
+  "consume_cast": false,
+  "fluid": {
+    "amount": 900,
+    "tag": "c:molten_alexandrite"
+  },
+  "result": {
+    "count": 1,
+    "id": "silentgems:alexandrite_block"
+  }
+}

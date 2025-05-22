@@ -1,0 +1,292 @@
+{
+  "values": {
+    "sgearmetalworks:molten_alexandrite": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_ammolite": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_azure_electrum": {
+      "units": [
+        {
+          "amount": 10,
+          "unit": "nugget"
+        },
+        {
+          "amount": 90,
+          "unit": "ingot"
+        },
+        {
+          "amount": 810,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_azure_silver": {
+      "units": [
+        {
+          "amount": 10,
+          "unit": "nugget"
+        },
+        {
+          "amount": 90,
+          "unit": "ingot"
+        },
+        {
+          "amount": 810,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_black_diamond": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_blaze_gold": {
+      "units": [
+        {
+          "amount": 10,
+          "unit": "nugget"
+        },
+        {
+          "amount": 90,
+          "unit": "ingot"
+        },
+        {
+          "amount": 810,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_carnelian": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_citrine": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_crimson_iron": {
+      "units": [
+        {
+          "amount": 10,
+          "unit": "nugget"
+        },
+        {
+          "amount": 90,
+          "unit": "ingot"
+        },
+        {
+          "amount": 810,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_crimson_steel": {
+      "units": [
+        {
+          "amount": 10,
+          "unit": "nugget"
+        },
+        {
+          "amount": 90,
+          "unit": "ingot"
+        },
+        {
+          "amount": 810,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_heliodor": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_iolite": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_kyanite": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_moldavite": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_peridot": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_rose_quartz": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_ruby": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_sapphire": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_topaz": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_turquoise": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_tyrian_steel": {
+      "units": [
+        {
+          "amount": 10,
+          "unit": "nugget"
+        },
+        {
+          "amount": 90,
+          "unit": "ingot"
+        },
+        {
+          "amount": 810,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_white_diamond": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket_drip",
+  "fluid": "sgearmetalworks:molten_citrine",
+  "loader": "neoforge:fluid_container"
+}

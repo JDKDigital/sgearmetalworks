@@ -4,9 +4,13 @@ import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
 import cy.jdkdigital.sgearmetalworks.registry.ModTags;
 import cy.jdkdigital.sgearmetalworks.registry.SGearMetalworksRegistrator;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.FluidTags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.silentchaos512.gems.util.Gems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -24,6 +28,9 @@ public class FluidTagProvider extends FluidTagsProvider
         tag(ModTags.Fluids.MOLTEN_AZURE_SILVER).add(SGearMetalworksRegistrator.MOLTEN_AZURE_SILVER.get());
         tag(ModTags.Fluids.MOLTEN_AZURE_ELECTRUM ).add(SGearMetalworksRegistrator.MOLTEN_AZURE_ELECTRUM.get());
         tag(ModTags.Fluids.MOLTEN_TYRIAN_STEEL).add(SGearMetalworksRegistrator.MOLTEN_TYRIAN_STEEL.get());
+        for(Gems gem: Gems.values()) {
+            tag(FluidTags.create(ResourceLocation.fromNamespaceAndPath("c", "molten_" + gem.getName()))).addOptional(ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "molten_" + gem.getName()));
+        }
     }
 
     @Override

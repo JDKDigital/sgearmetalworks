@@ -2,6 +2,7 @@ package cy.jdkdigital.sgearmetalworks;
 
 import com.mojang.logging.LogUtils;
 import cy.jdkdigital.sgearmetalworks.registry.SGearMetalworksRegistrator;
+import cy.jdkdigital.sgearmetalworks.registry.SGemsMetalworksRegistrator;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -45,6 +47,9 @@ public class SGearMetalworks
     public SGearMetalworks(IEventBus modEventBus, ModContainer modContainer)
     {
         SGearMetalworksRegistrator.register();
+        if (ModList.get().isLoaded("silentgems")) {
+            SGemsMetalworksRegistrator.register();
+        }
 
         BLOCKS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);

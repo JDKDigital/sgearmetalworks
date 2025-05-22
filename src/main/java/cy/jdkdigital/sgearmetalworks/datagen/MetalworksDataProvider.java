@@ -5,6 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -37,10 +38,15 @@ public class MetalworksDataProvider
 
             gen.addProvider(event.includeServer(), new MaterialsProvider(gen));
 
+            if (ModList.get().isLoaded("patchouli")) {
+                gen.addProvider(true, new GuideBookProvider(output, "en_us", provider));
+            }
+
             BlockTagProvider blockTags = new BlockTagProvider(output, provider, helper);
             gen.addProvider(event.includeServer(), blockTags);
             gen.addProvider(event.includeServer(), new ItemTagProvider(output, provider, blockTags.contentsGetter(), helper));
             gen.addProvider(event.includeServer(), new FluidTagProvider(output, provider, helper));
+            gen.addProvider(event.includeServer(), new DataMapProvider(output, provider));
         }
     }
 }

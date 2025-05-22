@@ -63,11 +63,17 @@ public class SilentGearCastingRecipeCategory extends AbstractRecipeCategory<Reci
 
         builder.addSlot(RecipeIngredientRole.INPUT, 26, 26)
                 .addIngredients(NeoForgeTypes.FLUID_STACK, fluidStacks)
+                .addRichTooltipCallback((recipeSlotView, tooltip) -> {
+                    tooltip.addAll(FluidHelper.formatTooltip(fluidStacks.getFirst()));
+                })
                 .setFluidRenderer(recipe.value().fluid.amount(), false, 16, 16)
                 .setSlotName("fluids_tank");
 
         builder.addSlot(RecipeIngredientRole.INPUT, 68, 16)
                 .addIngredients(NeoForgeTypes.FLUID_STACK, fluidStacks)
+                .addRichTooltipCallback((recipeSlotView, tooltip) -> {
+                    tooltip.addAll(FluidHelper.formatTooltip(fluidStacks.getFirst()));
+                })
                 .setFluidRenderer(recipe.value().fluid.amount(), false, 6,hasCast ? 10 : 26)
                 .setSlotName("fluids");
 

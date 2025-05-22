@@ -19,6 +19,7 @@ public class LanguageProvider extends net.neoforged.neoforge.common.data.Languag
         add("material.group.silentgear.casting", "Casting");
         add("material.group.silentgear.crude", "Crude");
         add("material." + SGearMetalworks.MODID + ".meat", "Meat");
+        add("tooltip." + SGearMetalworks.MODID + ".blueprint", "All metal and gem tool parts require casting in a foundry from Productive Metalworks");
 
         SGearMetalworks.ITEMS.getEntries().forEach(registryObject -> {
             if (registryObject.get() instanceof BucketItem) {

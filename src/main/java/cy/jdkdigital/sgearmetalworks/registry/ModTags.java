@@ -19,6 +19,7 @@ public class ModTags
         public static final TagKey<Item> CASTS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "casts"));
         public static final TagKey<Item> SG_CASTS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casts"));
         public static final TagKey<Item> INGOTS_MEAT = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "ingots/meat"));
+        public static final TagKey<Item> BLUEPRINT_OVERRIDE = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "blueprint_override"));
     }
 
     public static class Fluids

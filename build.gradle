@@ -126,10 +126,6 @@ configurations {
 dependencies {
     implementation "local.libs:productivelib-${lib_version}"
     implementation "local.libs:productivemetalworks-${metalworks_version}"
-    implementation "local.libs:silent-gear-1.21.1-neoforge-4.0.12"
-//    jarJar(group: 'cy.jdkdigital.productivelib', name: 'productivelib', version: "${lib_version_range}") {
-//        transitive(false)
-//    }
     implementation "xyz.brassgoggledcoders:PatchouliProvider:1.21.1-1.0.11-Snapshot.4"
 
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
@@ -147,8 +143,10 @@ dependencies {
     implementation "curse.maven:allthemodium-364466:6135138"
     implementation "curse.maven:geckolib-388172:6027599"
     implementation "curse.maven:ftb-materials-1124942:6117436"
-    implementation "curse.maven:silent-lib-242998:5730272"
+    implementation "curse.maven:silent-lib-242998:6285150"
     implementation "curse.maven:architectury-api-419699:5786327"
+    implementation "curse.maven:silent-gear-297039:6450243"
+    implementation "curse.maven:silents-gems-220311:5846347"
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -170,6 +168,7 @@ tasks.withType(ProcessResources).configureEach {
             metalworks_version       : metalworks_version,
             metalworks_version_range : metalworks_version_range,
             silentgear_version_range : silentgear_version_range,
+            silentgems_version_range : silentgems_version_range,
             patchouli_version        : patchouli_version
     ]
     inputs.properties replaceProperties

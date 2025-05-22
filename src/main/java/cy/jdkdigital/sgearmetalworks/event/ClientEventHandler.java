@@ -2,9 +2,11 @@ package cy.jdkdigital.sgearmetalworks.event;
 
 import cy.jdkdigital.productivemetalworks.ProductiveMetalworks;
 import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
+import cy.jdkdigital.sgearmetalworks.registry.ModTags;
 import cy.jdkdigital.sgearmetalworks.registry.SGearMetalworksRegistrator;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,6 +15,7 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 

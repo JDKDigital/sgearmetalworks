@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -72,7 +73,6 @@ public class SGearMetalworksRegistrator
     public static DeferredHolder<Item, Item> CAST_SHIELD = registerItem("shield_cast");
     public static DeferredHolder<Item, Item> CAST_TOOL_ROD = registerItem("tool_rod_cast");
     public static DeferredHolder<Item, Item> CAST_TIP = registerItem("tip_cast");
-
 
     public static DeferredHolder<Item, Item> registerItem(String name) {
         return registerItem(name, () -> new Item(new Item.Properties()));
