@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "sgearmetalworks:uru_metal_nugget"
+  }
+}

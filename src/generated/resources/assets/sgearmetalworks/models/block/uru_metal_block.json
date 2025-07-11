@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sgearmetalworks:block/uru_metal_block"
+  }
+}

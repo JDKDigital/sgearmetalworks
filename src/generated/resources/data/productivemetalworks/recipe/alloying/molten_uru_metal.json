@@ -1,0 +1,85 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "allthemodium"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_heavy_core"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:meat"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_azure_electrum"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_tyrian_steel"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_shulker_shell"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "productivelib:fluid_tag_empty",
+        "tag": "c:molten_ancient_debris"
+      }
+    }
+  ],
+  "type": "productivemetalworks:fluid_alloying",
+  "fluids": [
+    {
+      "amount": 180,
+      "tag": "c:molten_heavy_core"
+    },
+    {
+      "amount": 180,
+      "tag": "c:meat"
+    },
+    {
+      "amount": 90,
+      "tag": "c:molten_azure_electrum"
+    },
+    {
+      "amount": 90,
+      "tag": "c:molten_tyrian_steel"
+    },
+    {
+      "amount": 100,
+      "tag": "c:molten_shulker_shell"
+    },
+    {
+      "amount": 100,
+      "tag": "c:molten_ancient_debris"
+    }
+  ],
+  "result": {
+    "amount": 90,
+    "id": "sgearmetalworks:molten_uru_metal"
+  },
+  "speed": 1
+}

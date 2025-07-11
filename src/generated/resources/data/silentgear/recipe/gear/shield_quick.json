@@ -1,0 +1,37 @@
+{
+  "type": "silentgear:gear_crafting",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "type": "silentgear:blueprint",
+      "gear_type": "silentgear:shield",
+      "part_type": "silentgear:main"
+    },
+    {
+      "type": "silentgear:material",
+      "gear_type": "silentgear:shield",
+      "not_categories": [
+        "casting",
+        "infusing"
+      ],
+      "part_type": "silentgear:main"
+    },
+    {
+      "type": "silentgear:material",
+      "gear_type": "silentgear:shield",
+      "not_categories": [
+        "casting",
+        "infusing"
+      ],
+      "part_type": "silentgear:main"
+    },
+    {
+      "type": "silentgear:part_type",
+      "part_type": "silentgear:rod"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "silentgear:shield"
+  }
+}

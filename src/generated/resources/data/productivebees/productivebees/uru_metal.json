@@ -1,0 +1,8 @@
+{
+  "primaryColor": "#0b2037",
+  "secondaryColor": "#064f2c",
+  "flowerTag": "c:storage_blocks/uru_metal",
+  "beeTexture": "productivebees:textures/entity/bee/uru_metal/bee",
+  "size": 1.1,
+  "renderer": "default"
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    },
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    },
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    },
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    },
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    },
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    },
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    },
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    },
+    {
+      "item": "sgearmetalworks:uru_metal_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "sgearmetalworks:uru_metal_block"
+  }
+}

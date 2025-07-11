@@ -15,6 +15,9 @@
       "casting"
     ],
     "gear_type": "silentgear:tool",
+    "not_categories": [
+      "infusing"
+    ],
     "part_type": "silentgear:rod"
   },
   "material_count": 2,

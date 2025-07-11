@@ -3,6 +3,7 @@ package cy.jdkdigital.sgearmetalworks.registry;
 import cy.jdkdigital.productivemetalworks.common.block.HotLiquidBlock;
 import cy.jdkdigital.productivemetalworks.registry.MetalworksRegistrator;
 import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
+import cy.jdkdigital.sgearmetalworks.datagen.recipe.GearComponentIngredient;
 import cy.jdkdigital.sgearmetalworks.recipe.SilentGearCastingRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -13,8 +14,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -31,6 +34,7 @@ public class SGearMetalworksRegistrator
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> SG_GEAR_CASTING = SGearMetalworks.RECIPE_SERIALIZERS.register("sg_gear_casting", SilentGearCastingRecipe.Serializer::new);
     public static final DeferredHolder<RecipeType<?>, RecipeType<SilentGearCastingRecipe>> SG_GEAR_CASTING_TYPE = SGearMetalworks.RECIPE_TYPES.register("sg_gear_casting", () -> new RecipeType<>() {});
+    public static final DeferredHolder<IngredientType<?>, IngredientType<GearComponentIngredient>> GEAR_INGREDIENT_TYPE = SGearMetalworks.INGREDIENT_TYPES.register("component", () -> new IngredientType<>(GearComponentIngredient.CODEC));
 
     public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_CRIMSON_IRON = registerFluid("molten_crimson_iron", 0xfff0466e);
     public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_CRIMSON_STEEL = registerFluid("molten_crimson_steel", 0xffd9143b);
@@ -38,6 +42,13 @@ public class SGearMetalworksRegistrator
     public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_AZURE_SILVER = registerFluid("molten_azure_silver", 0xffcfa0f3);
     public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_AZURE_ELECTRUM = registerFluid("molten_azure_electrum", 0xff0c21dd);
     public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_TYRIAN_STEEL = registerFluid("molten_tyrian_steel", 0xffae107e);
+    public static DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_URU_METAL = registerFluid("molten_uru_metal", 0xff0b2037);
+
+    // Uru metal
+    public static DeferredHolder<Block, Block> URU_METAL_BLOCK = registerBlock("uru_metal_block", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK)), true);
+    public static DeferredHolder<Item, Item> URU_METAL_INGOT = registerItem("uru_metal_ingot");
+    public static DeferredHolder<Item, Item> URU_METAL_NUGGET = registerItem("uru_metal_nugget");
+
 
     public static DeferredHolder<Item, Item> CAST_SWORD = registerItem("sword_cast");
     public static DeferredHolder<Item, Item> CAST_KATANA = registerItem("katana_cast");

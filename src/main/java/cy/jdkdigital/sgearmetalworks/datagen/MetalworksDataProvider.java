@@ -31,12 +31,11 @@ public class MetalworksDataProvider
             ExistingFileHelper helper = event.getExistingFileHelper();
 
             gen.addProvider(event.includeClient(), new LanguageProvider(output, "en_us"));
-
+            gen.addProvider(event.includeClient(), new BlockModelProvider(output));
             gen.addProvider(event.includeClient(), new ItemModelProvider(output, helper));
-
-            gen.addProvider(event.includeServer(), new RecipeProvider(output, provider));
-
             gen.addProvider(event.includeServer(), new MaterialsProvider(gen));
+            gen.addProvider(event.includeServer(), new RecipeProvider(output, provider));
+            gen.addProvider(event.includeServer(), new BeeProvider(output, provider));
 
             if (ModList.get().isLoaded("patchouli")) {
                 gen.addProvider(true, new GuideBookProvider(output, "en_us", provider));

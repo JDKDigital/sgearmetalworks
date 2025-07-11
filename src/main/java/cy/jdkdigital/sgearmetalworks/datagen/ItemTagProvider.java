@@ -23,6 +23,13 @@ public class ItemTagProvider extends ItemTagsProvider
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(ModTags.Items.URU_METAL_STORAGE_BLOCKS).add(SGearMetalworksRegistrator.URU_METAL_BLOCK.get().asItem());
+        tag(ModTags.Items.STORAGE_BLOCKS).addTag(ModTags.Items.URU_METAL_STORAGE_BLOCKS);
+        tag(ModTags.Items.URU_METAL_INGOTS).add(SGearMetalworksRegistrator.URU_METAL_INGOT.get());
+        tag(ModTags.Items.INGOTS).addTag(ModTags.Items.URU_METAL_INGOTS);
+        tag(ModTags.Items.URU_METAL_NUGGETS).add(SGearMetalworksRegistrator.URU_METAL_NUGGET.get());
+        tag(ModTags.Items.NUGGETS).addTag(ModTags.Items.URU_METAL_NUGGETS);
+
         tag(ModTags.Items.CASTS).addTag(ModTags.Items.SG_CASTS);
         tag(ModTags.Items.SG_CASTS).add(
                 SGearMetalworksRegistrator.CAST_SWORD.get(),

@@ -15,6 +15,9 @@
       "casting"
     ],
     "gear_type": "silentgear:projectile",
+    "not_categories": [
+      "infusing"
+    ],
     "part_type": "silentgear:main"
   },
   "material_count": 1,

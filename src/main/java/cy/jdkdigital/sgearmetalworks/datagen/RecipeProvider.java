@@ -1,6 +1,16 @@
 package cy.jdkdigital.sgearmetalworks.datagen;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.JsonOps;
+import cy.jdkdigital.productivebees.common.crafting.conditions.BeeExistsCondition;
+import cy.jdkdigital.productivebees.common.crafting.ingredient.ComponentIngredient;
+import cy.jdkdigital.productivebees.init.ModDataComponents;
+import cy.jdkdigital.productivebees.init.ModEntities;
+import cy.jdkdigital.productivebees.init.ModItems;
+import cy.jdkdigital.productivelib.common.condition.LazyCondition;
 import cy.jdkdigital.productivelib.crafting.condition.FluidTagEmptyCondition;
 import cy.jdkdigital.productivemetalworks.ProductiveMetalworks;
 import cy.jdkdigital.productivemetalworks.datagen.recipe.BlockCastingRecipeBuilder;
@@ -9,26 +19,30 @@ import cy.jdkdigital.productivemetalworks.datagen.recipe.ItemCastingRecipeBuilde
 import cy.jdkdigital.productivemetalworks.datagen.recipe.ItemMeltingRecipeBuilder;
 import cy.jdkdigital.productivemetalworks.registry.MetalworksRegistrator;
 import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
+import cy.jdkdigital.sgearmetalworks.datagen.recipe.GearComponentIngredient;
 import cy.jdkdigital.sgearmetalworks.datagen.recipe.SilentGearCastingRecipeBuilder;
 import cy.jdkdigital.sgearmetalworks.registry.ModTags;
 import cy.jdkdigital.sgearmetalworks.registry.SGearMetalworksRegistrator;
 import cy.jdkdigital.sgearmetalworks.util.CastingMaterialCategories;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.fluids.crafting.TagFluidIngredient;
@@ -41,10 +55,12 @@ import net.silentchaos512.gear.crafting.recipe.ShapedGearRecipe;
 import net.silentchaos512.gear.crafting.recipe.ShapelessCompoundPartRecipe;
 import net.silentchaos512.gear.crafting.recipe.ShapelessGearRecipe;
 import net.silentchaos512.gear.gear.material.MaterialCategories;
+import net.silentchaos512.gear.gear.material.MaterialInstance;
+import net.silentchaos512.gear.item.CompoundPartItem;
 import net.silentchaos512.gear.item.GearItemSet;
-import net.silentchaos512.gear.item.MainPartItem;
 import net.silentchaos512.gear.item.gear.GearArmorItem;
 import net.silentchaos512.gear.setup.GearItemSets;
+import net.silentchaos512.gear.setup.SgDataComponents;
 import net.silentchaos512.gear.setup.SgItems;
 import net.silentchaos512.gear.setup.SgTags;
 import net.silentchaos512.gear.setup.gear.GearTypes;
@@ -54,6 +70,7 @@ import net.silentchaos512.lib.data.recipe.ExtendedShapedRecipeBuilder;
 import net.silentchaos512.lib.data.recipe.ExtendedShapelessRecipeBuilder;
 import net.silentchaos512.lib.util.NameUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +78,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider implements IConditionBuilder
 {
+    static String[] SGM_METALS = new String[]{
+            "sgearmetalworks:uru_metal"
+    };
     static String[] SG_METALS = new String[]{
             "silentgear:crimson_iron", "silentgear:crimson_steel", "silentgear:blaze_gold",
             "silentgear:azure_silver", "silentgear:azure_electrum", "silentgear:tyrian_steel"
@@ -80,13 +100,78 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         alloyRecipe(List.of(SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_AZURE_SILVER, 360), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_GOLD, 180), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_ENDER, 100)), 1, new FluidStack(SGearMetalworksRegistrator.MOLTEN_AZURE_ELECTRUM, 90), recipeOutput);
         alloyRecipe(List.of(SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_CRIMSON_STEEL, 90), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_AZURE_ELECTRUM, 90), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_SHULKER_SHELL, 100), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_ANCIENT_DEBRIS, 100)), 1, new FluidStack(SGearMetalworksRegistrator.MOLTEN_TYRIAN_STEEL, 360), recipeOutput);
 
+        alloyRecipe(List.of(
+                SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_HEAVY_CORE, 180),
+                SizedFluidIngredient.of(ModTags.Fluids.MEAT, 180),
+                SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_AZURE_ELECTRUM, 90),
+                SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_TYRIAN_STEEL, 90),
+                SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_SHULKER_SHELL, 100),
+                SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_ANCIENT_DEBRIS, 100)
+        ), 1, new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 90),
+                recipeOutput.withConditions(new NotCondition(new ModLoadedCondition("allthemodium"))));
+        alloyRecipe(List.of(
+                SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_HEAVY_CORE, 180),
+                SizedFluidIngredient.of(ModTags.Fluids.MEAT, 180),
+                SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_TYRIAN_STEEL, 90),
+                SizedFluidIngredient.of(BuiltInRegistries.FLUID.get(ResourceLocation.parse("allthemodium:molten_allthemodium")), 90),
+                SizedFluidIngredient.of(BuiltInRegistries.FLUID.get(ResourceLocation.parse("allthemodium:molten_vibranium")), 90),
+                SizedFluidIngredient.of(BuiltInRegistries.FLUID.get(ResourceLocation.parse("allthemodium:molten_unobtainium")), 90)
+        ), 1, new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 90),
+                recipeOutput.withConditions(new ModLoadedCondition("allthemodium")), "alloying/atm/molten_uru_metal");
+
+        ItemMeltingRecipeBuilder.of(Ingredient.of(ModTags.Items.URU_METAL_STORAGE_BLOCKS), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 800), 3000, 30000)
+                .save(recipeOutput, "melting/uru_metal_block");
+        ItemMeltingRecipeBuilder.of(Ingredient.of(ModTags.Items.URU_METAL_INGOTS), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 90), 3000, 30000)
+                .save(recipeOutput, "melting/uru_metal_ingot");
+        ItemMeltingRecipeBuilder.of(Ingredient.of(ModTags.Items.URU_METAL_NUGGETS), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 10), 3000, 30000)
+                .save(recipeOutput, "melting/uru_metal_nugget");
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SGearMetalworksRegistrator.URU_METAL_NUGGET.get(), 9)
+                .requires(SGearMetalworksRegistrator.URU_METAL_INGOT.get())
+                .unlockedBy(getHasName(SGearMetalworksRegistrator.URU_METAL_INGOT.get()), has(SGearMetalworksRegistrator.URU_METAL_INGOT.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "crafting/uru_metal_nugget_from_ingot"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SGearMetalworksRegistrator.URU_METAL_INGOT.get(), 9)
+                .requires(SGearMetalworksRegistrator.URU_METAL_BLOCK.get())
+                .unlockedBy(getHasName(SGearMetalworksRegistrator.URU_METAL_BLOCK.get()), has(SGearMetalworksRegistrator.URU_METAL_BLOCK.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "crafting/uru_metal_ingot_from_block"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SGearMetalworksRegistrator.URU_METAL_INGOT.get(), 1)
+                .requires(SGearMetalworksRegistrator.URU_METAL_NUGGET.get(), 9)
+                .unlockedBy(getHasName(SGearMetalworksRegistrator.URU_METAL_NUGGET.get()), has(SGearMetalworksRegistrator.URU_METAL_NUGGET.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "crafting/uru_metal_ingot_from_nugget"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SGearMetalworksRegistrator.URU_METAL_BLOCK.get(), 1)
+                .requires(SGearMetalworksRegistrator.URU_METAL_INGOT.get(), 9)
+                .unlockedBy(getHasName(SGearMetalworksRegistrator.URU_METAL_INGOT.get()), has(SGearMetalworksRegistrator.URU_METAL_INGOT.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "crafting/uru_metal_block_from_ingot"));
+
         cy.jdkdigital.productivemetalworks.datagen.RecipeProvider.metalCompat(SGearMetalworks.MODID, SG_METALS, recipeOutput);
+        cy.jdkdigital.productivemetalworks.datagen.RecipeProvider.modMetalCompat(SGearMetalworks.MODID, SGM_METALS, recipeOutput);
         cy.jdkdigital.productivemetalworks.datagen.RecipeProvider.modMetalCompat("silentgear", SG_METALS, recipeOutput);
 
         sgemsCompat(recipeOutput);
 
         gearCasting(recipeOutput);
         gearCrafting(recipeOutput);
+        georeCompat(recipeOutput);
+
+        // Uru metal bee
+        ItemCastingRecipeBuilder.of(ComponentIngredient.of(getBeeSpawnEgg("productivebees:beebee")), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_URU_METAL, 800), getBeeSpawnEgg("productivebees:uru_metal"), true)
+                .save(recipeOutput.withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:beebee")))).withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:uru_metal")))), ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/uru/bee_spawn_egg_from_bee"));
+        ItemCastingRecipeBuilder.of(ComponentIngredient.of(getBeeSpawnEgg("productivebees:netherite")), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_URU_METAL, 800), getBeeSpawnEgg("productivebees:uru_metal"), true)
+                .save(recipeOutput.withConditions(new NotCondition(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:beebee"))))).withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:netherite")))).withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:uru_metal")))), ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/uru/bee_spawn_egg_from_netherite"));
+
+        var combStack = ModItems.CONFIGURABLE_HONEYCOMB.get().getDefaultInstance();
+        combStack.set(ModDataComponents.BEE_TYPE, ResourceLocation.parse("productivebees:uru_metal"));
+        ItemMeltingRecipeBuilder.of(ComponentIngredient.of(combStack), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL.get(), 10), 3000, 30000)
+                .save(recipeOutput.withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:uru_metal")))), ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "melting/pbees/uru_metal_comb"));
+    }
+
+    private static ItemStack getBeeSpawnEgg(String type) {
+        var inputEgg = new ItemStack(ModItems.CONFIGURABLE_SPAWN_EGG.get());
+        var inputTag = new CompoundTag();
+        inputTag.putString("id", ModEntities.CONFIGURABLE_BEE.getId().toString());
+        inputTag.putString("type", type);
+        inputEgg.set(DataComponents.ENTITY_DATA, CustomData.of(inputTag));
+        return inputEgg;
     }
 
     private void sgemsCompat(RecipeOutput recipeOutput) {
@@ -114,40 +199,40 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         var compatRecipeOutput = recipeOutput.withConditions(new ModLoadedCondition("silentgear"));
 
         Map<String, Pair<PartMaterialIngredient, Integer>> materialCost = new HashMap<>() {{
-            put("sword", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 2));
-            put("katana", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("machete", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("spear", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 1));
-            put("trident", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("mace", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("knife", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 1));
-            put("dagger", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 1));
-            put("pickaxe", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("shovel", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 1));
-            put("axe", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("paxel", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 5));
-            put("hammer", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 6));
-            put("excavator", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 5));
-            put("hoe", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 2));
-            put("mattock", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 4));
-            put("prospector_hammer", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 2));
-            put("saw", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 5));
-            put("sickle", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("shears", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 2));
-            put("fishing_rod", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 2));
-            put("bow", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("crossbow", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 3));
-            put("slingshot", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING), 2));
-            put("arrow", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.PROJECTILE.get(), CastingMaterialCategories.CASTING), 1));
+            put("sword", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2));
+            put("katana", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("machete", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("spear", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 1));
+            put("trident", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("mace", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("knife", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 1));
+            put("dagger", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 1));
+            put("pickaxe", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("shovel", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 1));
+            put("axe", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("paxel", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 5));
+            put("hammer", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 6));
+            put("excavator", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 5));
+            put("hoe", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2));
+            put("mattock", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 4));
+            put("prospector_hammer", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2));
+            put("saw", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 5));
+            put("sickle", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("shears", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2));
+            put("fishing_rod", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2));
+            put("bow", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("crossbow", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("slingshot", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2));
+            put("arrow", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.PROJECTILE.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 1));
 
-            put("ring", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), CastingMaterialCategories.CASTING), 2));
-            put("bracelet", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), CastingMaterialCategories.CASTING), 3));
-            put("necklace", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), CastingMaterialCategories.CASTING), 3));
-            put("helmet", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.HELMET.get(), CastingMaterialCategories.CASTING), 5));
-            put("chestplate", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CHESTPLATE.get(), CastingMaterialCategories.CASTING), 8));
-            put("leggings", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.LEGGINGS.get(), CastingMaterialCategories.CASTING), 7));
-            put("boots", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.BOOTS.get(), CastingMaterialCategories.CASTING), 4));
-            put("shield", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.ARMOR.get(), CastingMaterialCategories.CASTING), 2));
+            put("ring", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2));
+            put("bracelet", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("necklace", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3));
+            put("helmet", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.HELMET.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 5));
+            put("chestplate", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CHESTPLATE.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 8));
+            put("leggings", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.LEGGINGS.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 7));
+            put("boots", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.BOOTS.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 4));
+            put("shield", Pair.of(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.ARMOR.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2));
         }};
 
         // Iterate blueprints and use them as the cast
@@ -167,10 +252,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 SilentGearCastingRecipeBuilder.of(cast, amount.getFirst(), amount.getSecond(), gearItemSet.mainPart().getDefaultInstance(), false)
                     .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/" + gearItemSet.partName()));
             }
+
+            atmCompat(recipeOutput, gearItemSet, amount);
         });
-        SilentGearCastingRecipeBuilder.of(SGearMetalworksRegistrator.CAST_TOOL_ROD.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.ROD.get(), CastingMaterialCategories.CASTING), 2, SgItems.ROD.get().getDefaultInstance(), false)
+        SilentGearCastingRecipeBuilder.of(SGearMetalworksRegistrator.CAST_TOOL_ROD.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.ROD.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2, SgItems.ROD.get().getDefaultInstance(), false)
                 .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/tool_rod"));
-        SilentGearCastingRecipeBuilder.of(SGearMetalworksRegistrator.CAST_TIP.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.TIP.get(), CastingMaterialCategories.CASTING), 2, SgItems.TIP.get().getDefaultInstance(), false)
+        SilentGearCastingRecipeBuilder.of(SGearMetalworksRegistrator.CAST_TIP.get().getDefaultInstance(), PartMaterialIngredient.of(PartTypes.TIP.get(), CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2, SgItems.TIP.get().getDefaultInstance(), false)
                 .save(compatRecipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/silentgear/tip"));
 
         ItemCastingRecipeBuilder.of(SgItems.ROD.get().getDefaultInstance(), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_STEEL, 360), SGearMetalworksRegistrator.CAST_TOOL_ROD.get().getDefaultInstance(), true)
@@ -219,11 +306,16 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         armorRecipes(recipeOutput, 7, GearItemSets.LEGGINGS);
         armorRecipes(recipeOutput, 4, GearItemSets.BOOTS);
 
+        // Shield
+        shapelessPart(RecipeCategory.COMBAT, GearItemSets.SHIELD.mainPart())
+                .requires(BlueprintIngredient.of(GearItemSets.SHIELD))
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.SHIELD.get()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2)
+                .save(recipeOutput, SilentGear.getId("gear/shield_plate"));
         shapelessGear(RecipeCategory.COMBAT, GearItemSets.SHIELD.gearItem())
                 .requires(BlueprintIngredient.of(GearItemSets.SHIELD))
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.ARMOR.get()), 2)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.SHIELD.get()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2)
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
-                .save(recipeOutput, SilentGear.getId("gear/shield"));
+                .save(recipeOutput, SilentGear.getId("gear/shield_quick"));
         // alloy shield parts
         shapelessGear(RecipeCategory.TOOLS, GearItemSets.SHIELD.gearItem())
                 .requires(BlueprintIngredient.of(GearItemSets.SHIELD))
@@ -289,7 +381,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
     private static void registerCompoundParts(RecipeOutput consumer) {
         compoundPart(SgItems.ROD, 4)
                 .requires(BlueprintIngredient.of(SgItems.ROD_BLUEPRINT.get()))
-                .requires(PartMaterialIngredient.of(PartTypes.ROD.get()).not(CastingMaterialCategories.CASTING), 2)
+                .requires(PartMaterialIngredient.of(PartTypes.ROD.get()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2)
                 .save(consumer, SilentGear.getId("part/rod"));
 
         compoundPart(SgItems.TIP, 1)
@@ -333,12 +425,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
                 .requires(Items.HEAVY_CORE)
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING), 3)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3)
                 .save(output, SilentGear.getId("gear/mace_core"));
         shapelessGear(RecipeCategory.TOOLS, itemSet.gearItem())
                 .requires(BlueprintIngredient.of(itemSet))
                 .requires(Items.HEAVY_CORE)
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING), 3)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 3)
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .save(output, SilentGear.getId("gear/mace_quick"));
         // alloy gear parts
@@ -353,12 +445,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         // Main part
         shapelessPart(RecipeCategory.COMBAT, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING), mainCount)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), mainCount)
                 .save(consumer, SilentGear.getId("gear/" + name + "_main"));
         // Quick tool (main materials, rod, and cord, skipping main part)
         shapelessGear(RecipeCategory.COMBAT, itemSet.gearItem())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING), mainCount)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.TOOL.get()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), mainCount)
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .requires(GearPartIngredient.of(PartTypes.CORD.get()))
                 .save(consumer, SilentGear.getId("gear/" + name + "_quick"));
@@ -392,7 +484,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
     private static void armorRecipes(RecipeOutput consumer, int mainCount, GearItemSet<? extends GearArmorItem> itemSet) {
         shapelessPart(RecipeCategory.COMBAT, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), itemSet.gearItem().getGearType()).not(CastingMaterialCategories.CASTING), mainCount)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), itemSet.gearItem().getGearType()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), mainCount)
                 .save(consumer, SilentGear.getId("gear/" + NameUtils.fromItem(itemSet.mainPart()).getPath()));
         // alloy gear parts
         shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
@@ -404,12 +496,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
     private static void curioRecipes(RecipeOutput consumer, String name, int mainCount, GearItemSet<?> itemSet) {
         shapelessPart(RecipeCategory.MISC, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), MaterialCategories.METAL, CastingMaterialCategories.CRUDE).not(CastingMaterialCategories.CASTING), mainCount)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), MaterialCategories.METAL, CastingMaterialCategories.CRUDE).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), mainCount)
                 .save(consumer, SilentGear.getId("gear/" + name + "_main_only"));
 
         shapelessGear(RecipeCategory.MISC, itemSet.gearItem())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), MaterialCategories.METAL, CastingMaterialCategories.CRUDE).not(CastingMaterialCategories.CASTING), mainCount)
+                .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.CURIO.get(), MaterialCategories.METAL, CastingMaterialCategories.CRUDE).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), mainCount)
                 .requires(GearPartIngredient.of(PartTypes.SETTING.get()))
                 .save(consumer, SilentGear.getId("gear/" + name + "_quick"));
         // alloy gear parts
@@ -431,12 +523,60 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
     }
 
     private static void alloyRecipe(List<SizedFluidIngredient> inputs, int speed, FluidStack output, RecipeOutput recipeOutput) {
+        alloyRecipe(inputs, speed, output, recipeOutput, "alloying/" + BuiltInRegistries.FLUID.getKey(output.getFluid()).getPath());
+    }
+    private static void alloyRecipe(List<SizedFluidIngredient> inputs, int speed, FluidStack output, RecipeOutput recipeOutput, String recipeId) {
         var conditionalRecipeOutput = recipeOutput;
         for (SizedFluidIngredient sizedFluidIngredient : inputs) {
             if (sizedFluidIngredient.ingredient() instanceof TagFluidIngredient tagFluidIngredient) {
                 conditionalRecipeOutput = conditionalRecipeOutput.withConditions(new NotCondition(new FluidTagEmptyCondition(tagFluidIngredient.tag())));
             }
         }
-        FluidAlloyingRecipeBuilder.of(inputs, speed, output).save(conditionalRecipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "alloying/" + BuiltInRegistries.FLUID.getKey(output.getFluid()).getPath()));
+        FluidAlloyingRecipeBuilder.of(inputs, speed, output).save(conditionalRecipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, recipeId));
+    }
+
+    private void georeCompat(RecipeOutput recipeOutput) {
+        for (String resource : new String[]{"ruby", "topaz", "sapphire"}) {
+            var fluid = BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "molten_" + (resource.equals("coal") ? "carbon" : resource)));
+
+            var shardItem = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("geore", resource + "_shard"));
+            var blockItem = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("geore", resource + "_block"));
+
+            // melt block
+            ItemMeltingRecipeBuilder.of(
+                    Ingredient.of(blockItem),
+                    new FluidStack(fluid, 400)
+            ).save(recipeOutput.withConditions(new ModLoadedCondition("geore")).withConditions(new ModLoadedCondition("silentgems")), ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "melting/geore/" + resource + "_block"));
+            // melt shard
+            ItemMeltingRecipeBuilder.of(
+                    Ingredient.of(shardItem),
+                    new FluidStack(fluid, 100)
+            ).save(recipeOutput.withConditions(new ModLoadedCondition("geore")).withConditions(new ModLoadedCondition("silentgems")), ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "melting/geore/" + resource + "_shard"));
+        }
+    }
+
+    private static void atmCompat(RecipeOutput recipeOutput, GearItemSet<?> gearItemSet, Pair<PartMaterialIngredient, Integer> amount) {
+        // only be able to cast uru onto unobtainium parts
+        if (!gearItemSet.partName().equals("elytra_wings")) {
+            ItemStack cast = gearItemSet.mainPart().getDefaultInstance();
+            ItemStack output = gearItemSet.mainPart().getDefaultInstance();
+            JsonElement inputMaterial = JsonParser.parseString("{\"item\": {\"count\": 1, \"id\": \"silentgear:tyrian_steel_ingot\"}, \"material\": \"silentgear:tyrian_steel\"}");
+            JsonElement uruMaterial = JsonParser.parseString("{\"item\": {\"count\": 1, \"id\": \"sgearmetalworks:uru_metal_ingot\"}, \"material\": \"sgearmetalworks:uru_metal\"}");
+
+            //             JsonElement unobMaterial = JsonParser.parseString("{\"item\": {\"count\": 1, \"id\": \"kubejs:silent_unobtainium_plate\"}, \"material\": \"silentgear:unobtainium\"}");
+
+            MaterialInstance INPUT_MATERIAL = MaterialInstance.CODEC.decode(JsonOps.INSTANCE, inputMaterial).getOrThrow().getFirst();
+            MaterialInstance URU_MATERIAL = MaterialInstance.CODEC.decode(JsonOps.INSTANCE, uruMaterial).getOrThrow().getFirst();
+            List<MaterialInstance> ingredientMats = new ArrayList<>();
+            List<MaterialInstance> outputMats = new ArrayList<>();
+            for (int i = 0; i < amount.getSecond(); i++) {
+                ingredientMats.add(INPUT_MATERIAL);
+                outputMats.add(URU_MATERIAL);
+            }
+            cast.set(SgDataComponents.MATERIAL_LIST, ingredientMats);
+            output.set(SgDataComponents.MATERIAL_LIST, outputMats);
+            ItemCastingRecipeBuilder.of(GearComponentIngredient.of(cast), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_URU_METAL, 90 * amount.getSecond()), output, true)
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/uru/" + gearItemSet.partName()));
+        }
     }
 }

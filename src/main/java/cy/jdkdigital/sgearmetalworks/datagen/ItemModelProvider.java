@@ -1,6 +1,7 @@
 package cy.jdkdigital.sgearmetalworks.datagen;
 
 import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
+import cy.jdkdigital.sgearmetalworks.registry.SGearMetalworksRegistrator;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +25,7 @@ public class ItemModelProvider extends net.neoforged.neoforge.client.model.gener
             }
         });
 
-//        basicItem(SGearMetalworksRegistrator.CAST_INGOT.get());
+        basicItem(SGearMetalworksRegistrator.URU_METAL_INGOT.get());
+        basicItem(SGearMetalworksRegistrator.URU_METAL_NUGGET.get());
     }
 }

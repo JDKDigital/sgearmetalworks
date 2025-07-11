@@ -1,3 +1,21 @@
+1.21.1-1.4.1
+
+- Boosted Uru Metal material stats
+- Fixed Uru Metal Block recipe
+
+
+1.21.1-1.4.0
+
+- Added Uru Metal, an endgame silent gear material
+- Added Uru Metal Bee for Productive Bees (Lego)
+
+
+1.21.1-1.3.1
+
+- Updated shield recipes
+- Added melting recipes for GeOre ruby, sapphire and topaz
+
+
 1.21.1-1.3.0
 
 - Added Silent's Gems support

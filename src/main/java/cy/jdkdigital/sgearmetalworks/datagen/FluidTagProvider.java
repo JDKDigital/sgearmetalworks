@@ -28,6 +28,7 @@ public class FluidTagProvider extends FluidTagsProvider
         tag(ModTags.Fluids.MOLTEN_AZURE_SILVER).add(SGearMetalworksRegistrator.MOLTEN_AZURE_SILVER.get());
         tag(ModTags.Fluids.MOLTEN_AZURE_ELECTRUM ).add(SGearMetalworksRegistrator.MOLTEN_AZURE_ELECTRUM.get());
         tag(ModTags.Fluids.MOLTEN_TYRIAN_STEEL).add(SGearMetalworksRegistrator.MOLTEN_TYRIAN_STEEL.get());
+        tag(ModTags.Fluids.MOLTEN_URU_METAL).add(SGearMetalworksRegistrator.MOLTEN_URU_METAL.get());
         for(Gems gem: Gems.values()) {
             tag(FluidTags.create(ResourceLocation.fromNamespaceAndPath("c", "molten_" + gem.getName()))).addOptional(ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "molten_" + gem.getName()));
         }

@@ -1,7 +1,9 @@
 package cy.jdkdigital.sgearmetalworks.datagen;
 
+import com.google.common.collect.Lists;
 import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
 import cy.jdkdigital.sgearmetalworks.registry.ModTags;
+import cy.jdkdigital.sgearmetalworks.registry.SGearMetalworksRegistrator;
 import cy.jdkdigital.sgearmetalworks.util.CastingMaterialCategories;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
@@ -76,6 +78,41 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .stat(PartTypes.ROD, GearProperties.HARVEST_SPEED, -0.1f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .trait(PartTypes.ROD, Const.Traits.BRITTLE, 2)
                 .trait(PartTypes.ROD, Const.Traits.CHIPPING, 3)
+        );
+
+        // Uru
+        materials.add(MaterialBuilder.simple(modId("uru_metal"))
+                .crafting(new MaterialCraftingData(Ingredient.of(ModTags.Items.URU_METAL_INGOTS), Lists.newArrayList(MaterialCategories.METAL, MaterialCategories.ENDGAME, CastingMaterialCategories.CASTING, CastingMaterialCategories.INFUSING), Collections.emptyList(), Collections.emptyMap(), false))
+                .displayWithDefaultName(0x0b2037, TextureType.HIGH_CONTRAST)
+                //main
+                .mainStatsCommon(15000, 5000, 1500, 200, 1.5f)
+                .stat(PartTypes.MAIN, GearProperties.REPAIR_VALUE, 0.5f)
+                .mainStatsHarvest(29)
+                .mainStatsMelee(12, 11, 0.0f)
+                .mainStatsRanged(8, 0.5f)
+                .mainStatsProjectile(2f, 2.5f)
+                .mainStatsArmor(8, 14, 12, 8, 24, 25)
+                .trait(PartTypes.MAIN, Const.Traits.MALLEABLE, 6)
+                .trait(PartTypes.MAIN, Const.Traits.INDESTRUCTIBLE, 1)
+                .trait(PartTypes.MAIN, Const.Traits.AQUATIC, 1)
+                .trait(PartTypes.MAIN, Const.Traits.BRILLIANT, 1)
+                .trait(PartTypes.MAIN, Const.Traits.FLAME_WARD, 1)
+                .trait(PartTypes.MAIN, Const.Traits.CURE_WITHER, 1)
+                .trait(PartTypes.MAIN, Const.Traits.CURE_POISON, 1)
+                //rod
+                .stat(PartTypes.ROD, GearProperties.DURABILITY, 3.5f, NumberProperty.Operation.MULTIPLY_TOTAL)
+                .stat(PartTypes.ROD, GearProperties.ENCHANTMENT_VALUE, 23, NumberProperty.Operation.ADD)
+                .stat(PartTypes.ROD, GearProperties.RARITY, 99, NumberProperty.Operation.MULTIPLY_TOTAL)
+                .trait(PartTypes.ROD, Const.Traits.HARD, 5, new MaterialRatioTraitCondition(0.66f))
+                //tip
+                .stat(PartTypes.TIP, GearProperties.DURABILITY, 16, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.ARMOR_DURABILITY, 1, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.RARITY, 60, NumberProperty.Operation.MULTIPLY_TOTAL)
+                .harvestTierBuiltin(PartTypes.TIP)
+                .stat(PartTypes.TIP, GearProperties.HARVEST_SPEED, 6, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.PROJECTILE_SPEED, 0.7f, NumberProperty.Operation.ADD)
+                .trait(PartTypes.TIP, Const.Traits.MALLEABLE, 5)
+                .trait(PartTypes.TIP, Const.Traits.HARD, 5, new MaterialRatioTraitCondition(0.66f))
         );
 
         // Meat

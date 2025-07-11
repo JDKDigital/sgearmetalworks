@@ -11,7 +11,8 @@
       "type": "silentgear:material",
       "gear_type": "silentgear:tool",
       "not_categories": [
-        "casting"
+        "casting",
+        "infusing"
       ],
       "part_type": "silentgear:main"
     },
@@ -19,7 +20,8 @@
       "type": "silentgear:material",
       "gear_type": "silentgear:tool",
       "not_categories": [
-        "casting"
+        "casting",
+        "infusing"
       ],
       "part_type": "silentgear:main"
     },
@@ -27,7 +29,8 @@
       "type": "silentgear:material",
       "gear_type": "silentgear:tool",
       "not_categories": [
-        "casting"
+        "casting",
+        "infusing"
       ],
       "part_type": "silentgear:main"
     }

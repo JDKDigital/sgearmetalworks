@@ -15,14 +15,14 @@ import org.jetbrains.annotations.Nullable;
 public class SilentGearCastingRecipeBuilder implements RecipeBuilder
 {
     private final Ingredient cast;
-    private final PartMaterialIngredient fluid;
+    private final PartMaterialIngredient material;
     private final int materialCount;
     private final ItemStack result;
     private final boolean consumeCast;
 
     private SilentGearCastingRecipeBuilder(Ingredient cast, PartMaterialIngredient material, int materialCount, ItemStack result, boolean consumeCast) {
         this.cast = cast;
-        this.fluid = material;
+        this.material = material;
         this.materialCount = materialCount;
         this.result = result;
         this.consumeCast = consumeCast;
@@ -53,6 +53,6 @@ public class SilentGearCastingRecipeBuilder implements RecipeBuilder
 
     @Override
     public void save(RecipeOutput recipeOutput, ResourceLocation id) {
-        recipeOutput.accept(id, new SilentGearCastingRecipe(cast, fluid, materialCount, result, consumeCast), null);
+        recipeOutput.accept(id, new SilentGearCastingRecipe(cast, material, materialCount, result, consumeCast), null);
     }
 }

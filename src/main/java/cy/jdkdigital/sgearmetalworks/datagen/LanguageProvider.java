@@ -17,9 +17,13 @@ public class LanguageProvider extends net.neoforged.neoforge.common.data.Languag
     protected void addTranslations() {
         add("jei." + SGearMetalworks.MODID + ".sg_casting", "Silent Gear Casting");
         add("material.group.silentgear.casting", "Casting");
+        add("material.group.silentgear.infusing", "Infusing");
         add("material.group.silentgear.crude", "Crude");
         add("material." + SGearMetalworks.MODID + ".meat", "Meat");
+        add("material." + SGearMetalworks.MODID + ".uru_metal", "Uru Metal");
         add("tooltip." + SGearMetalworks.MODID + ".blueprint", "All metal and gem tool parts require casting in a foundry from Productive Metalworks");
+        add("entity.productivebees.uru_metal_bee", "Uru Metal Bee");
+        add("productivebees.ingredient.description.uru_metal_bee", "To acquire this bee, look up the crafting recipe for its spawn egg.");
 
         SGearMetalworks.ITEMS.getEntries().forEach(registryObject -> {
             if (registryObject.get() instanceof BucketItem) {

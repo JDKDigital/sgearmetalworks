@@ -15,7 +15,8 @@
       ],
       "gear_type": "silentgear:curio",
       "not_categories": [
-        "casting"
+        "casting",
+        "infusing"
       ],
       "part_type": "silentgear:main"
     },
@@ -27,7 +28,8 @@
       ],
       "gear_type": "silentgear:curio",
       "not_categories": [
-        "casting"
+        "casting",
+        "infusing"
       ],
       "part_type": "silentgear:main"
     },
