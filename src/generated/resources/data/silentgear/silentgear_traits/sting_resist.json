@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "silentgear:gear_type",
+      "gear_type": "silentgear:armor"
+    }
+  ],
+  "description": {
+    "translate": "trait.silentgear.sting_resist.desc"
+  },
+  "effects": [
+    {
+      "type": "silentgear:fireproof"
+    },
+    {
+      "type": "silentgear:negate_damage",
+      "damage_type_tag": "sgearmetalworks:uru_metal_negate_damage",
+      "negated_damage_scale": 0.25
+    }
+  ],
+  "max_level": 4,
+  "name": {
+    "translate": "trait.silentgear.sting_resist"
+  }
+}

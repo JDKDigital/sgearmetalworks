@@ -1,11 +1,13 @@
 package cy.jdkdigital.sgearmetalworks.registry;
 
 import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
@@ -52,5 +54,10 @@ public class ModTags
         public static final TagKey<Fluid> MOLTEN_BLAZE = FluidTags.create(ResourceLocation.fromNamespaceAndPath("c", "molten_blaze"));
         public static final TagKey<Fluid> MOLTEN_MAGMA_CREAM = FluidTags.create(ResourceLocation.fromNamespaceAndPath("c", "molten_magma_cream"));
         public static final TagKey<Fluid> MEAT = FluidTags.create(ResourceLocation.fromNamespaceAndPath("c", "meat"));
+    }
+
+    public static class DamageTypes
+    {
+        public static final TagKey<DamageType> URU_NEGATE_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "uru_metal_negate_damage"));
     }
 }

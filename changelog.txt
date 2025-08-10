@@ -1,3 +1,13 @@
+1.21.1-1.4.3
+
+- Fixed damage type tag so the trait actually works
+
+
+1.21.1-1.4.2
+
+- Made Uru Metal armor negate bee sting damage
+
+
 1.21.1-1.4.1
 
 - Boosted Uru Metal material stats

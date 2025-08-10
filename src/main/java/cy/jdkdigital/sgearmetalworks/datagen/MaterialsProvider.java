@@ -16,6 +16,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.silentchaos512.gear.SilentGear;
 import net.silentchaos512.gear.api.data.material.MaterialBuilder;
 import net.silentchaos512.gear.api.data.material.MaterialsProviderBase;
+import net.silentchaos512.gear.api.data.trait.TraitBuilder;
 import net.silentchaos512.gear.api.material.IMaterialCategory;
 import net.silentchaos512.gear.api.material.MaterialCraftingData;
 import net.silentchaos512.gear.api.material.TextureType;
@@ -31,6 +32,8 @@ import net.silentchaos512.gear.gear.material.SimpleMaterial;
 import net.silentchaos512.gear.gear.trait.condition.MaterialCountTraitCondition;
 import net.silentchaos512.gear.gear.trait.condition.MaterialRatioTraitCondition;
 import net.silentchaos512.gear.gear.trait.condition.OrTraitCondition;
+import net.silentchaos512.gear.gear.trait.effect.FireproofTraitEffect;
+import net.silentchaos512.gear.gear.trait.effect.NegateDamageTraitEffect;
 import net.silentchaos512.gear.setup.SgTags;
 import net.silentchaos512.gear.setup.gear.GearProperties;
 import net.silentchaos512.gear.setup.gear.GearTypes;
@@ -85,13 +88,14 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .crafting(new MaterialCraftingData(Ingredient.of(ModTags.Items.URU_METAL_INGOTS), Lists.newArrayList(MaterialCategories.METAL, MaterialCategories.ENDGAME, CastingMaterialCategories.CASTING, CastingMaterialCategories.INFUSING), Collections.emptyList(), Collections.emptyMap(), false))
                 .displayWithDefaultName(0x0b2037, TextureType.HIGH_CONTRAST)
                 //main
-                .mainStatsCommon(15000, 5000, 1500, 200, 1.5f)
+                .mainStatsCommon(15000, 50000, 1500, 200, 1.5f)
                 .stat(PartTypes.MAIN, GearProperties.REPAIR_VALUE, 0.5f)
+                .stat(PartTypes.MAIN, GearProperties.HARVEST_TIER, HarvestTier.NETHERITE)
                 .mainStatsHarvest(29)
                 .mainStatsMelee(12, 11, 0.0f)
                 .mainStatsRanged(8, 0.5f)
                 .mainStatsProjectile(2f, 2.5f)
-                .mainStatsArmor(8, 14, 12, 8, 24, 25)
+                .mainStatsArmor(8, 14, 12, 8, 100, 600)
                 .trait(PartTypes.MAIN, Const.Traits.MALLEABLE, 6)
                 .trait(PartTypes.MAIN, Const.Traits.INDESTRUCTIBLE, 1)
                 .trait(PartTypes.MAIN, Const.Traits.AQUATIC, 1)
@@ -99,6 +103,7 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .trait(PartTypes.MAIN, Const.Traits.FLAME_WARD, 1)
                 .trait(PartTypes.MAIN, Const.Traits.CURE_WITHER, 1)
                 .trait(PartTypes.MAIN, Const.Traits.CURE_POISON, 1)
+                .trait(PartTypes.MAIN, SGearMetalworksRegistrator.NEGATE_STING_TRAIT, 1)
                 //rod
                 .stat(PartTypes.ROD, GearProperties.DURABILITY, 3.5f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .stat(PartTypes.ROD, GearProperties.ENCHANTMENT_VALUE, 23, NumberProperty.Operation.ADD)
@@ -113,6 +118,18 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .stat(PartTypes.TIP, GearProperties.PROJECTILE_SPEED, 0.7f, NumberProperty.Operation.ADD)
                 .trait(PartTypes.TIP, Const.Traits.MALLEABLE, 5)
                 .trait(PartTypes.TIP, Const.Traits.HARD, 5, new MaterialRatioTraitCondition(0.66f))
+                //coating
+                .stat(PartTypes.COATING, GearProperties.DURABILITY, 2.5f, NumberProperty.Operation.MULTIPLY_TOTAL)
+                .stat(PartTypes.COATING, GearProperties.ARMOR_DURABILITY, 4f, NumberProperty.Operation.MULTIPLY_TOTAL)
+                .stat(PartTypes.COATING, GearProperties.HARVEST_TIER, new HarvestTierPropertyValue(
+                        HarvestTier.create(
+                                "netherite",
+                                "4",
+                                BlockTags.INCORRECT_FOR_NETHERITE_TOOL
+                        )
+                ))
+                .stat(PartTypes.COATING, GearProperties.ENCHANTMENT_VALUE, 500, NumberProperty.Operation.ADD)
+                .trait(PartTypes.COATING, SGearMetalworksRegistrator.NEGATE_STING_TRAIT, 1)
         );
 
         // Meat

@@ -7,9 +7,9 @@
         {
           "item": {
             "count": 1,
-            "id": "kubejs:silent_unobtainium_plate"
+            "id": "silentgear:tyrian_steel_ingot"
           },
-          "material": "silentgear:unobtainium"
+          "material": "silentgear:tyrian_steel"
         }
       ]
     },

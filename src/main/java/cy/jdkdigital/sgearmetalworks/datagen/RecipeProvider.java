@@ -163,6 +163,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         combStack.set(ModDataComponents.BEE_TYPE, ResourceLocation.parse("productivebees:uru_metal"));
         ItemMeltingRecipeBuilder.of(ComponentIngredient.of(combStack), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL.get(), 10), 3000, 30000)
                 .save(recipeOutput.withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:uru_metal")))), ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "melting/pbees/uru_metal_comb"));
+
+        var combBlockStack = ModItems.CONFIGURABLE_COMB_BLOCK.get().getDefaultInstance();
+        combBlockStack.set(ModDataComponents.BEE_TYPE, ResourceLocation.parse("productivebees:uru_metal"));
+        ItemMeltingRecipeBuilder.of(ComponentIngredient.of(combBlockStack), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL.get(), 40), 3000, 30000)
+                .save(recipeOutput.withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:uru_metal")))), ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "melting/pbees/uru_metal_comb_block"));
+
     }
 
     private static ItemStack getBeeSpawnEgg(String type) {
@@ -563,7 +569,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
             JsonElement inputMaterial = JsonParser.parseString("{\"item\": {\"count\": 1, \"id\": \"silentgear:tyrian_steel_ingot\"}, \"material\": \"silentgear:tyrian_steel\"}");
             JsonElement uruMaterial = JsonParser.parseString("{\"item\": {\"count\": 1, \"id\": \"sgearmetalworks:uru_metal_ingot\"}, \"material\": \"sgearmetalworks:uru_metal\"}");
 
-            //             JsonElement unobMaterial = JsonParser.parseString("{\"item\": {\"count\": 1, \"id\": \"kubejs:silent_unobtainium_plate\"}, \"material\": \"silentgear:unobtainium\"}");
+//            inputMaterial = JsonParser.parseString("{\"item\": {\"count\": 1, \"id\": \"kubejs:silent_unobtainium_plate\"}, \"material\": \"silentgear:unobtainium\"}");
 
             MaterialInstance INPUT_MATERIAL = MaterialInstance.CODEC.decode(JsonOps.INSTANCE, inputMaterial).getOrThrow().getFirst();
             MaterialInstance URU_MATERIAL = MaterialInstance.CODEC.decode(JsonOps.INSTANCE, uruMaterial).getOrThrow().getFirst();

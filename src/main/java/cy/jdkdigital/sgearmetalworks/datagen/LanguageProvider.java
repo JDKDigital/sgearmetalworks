@@ -21,6 +21,8 @@ public class LanguageProvider extends net.neoforged.neoforge.common.data.Languag
         add("material.group.silentgear.crude", "Crude");
         add("material." + SGearMetalworks.MODID + ".meat", "Meat");
         add("material." + SGearMetalworks.MODID + ".uru_metal", "Uru Metal");
+        add("trait.silentgear.sting_resist", "Sting resist");
+        add("trait.silentgear.sting_resist.desc", "Bee stings no longer sting");
         add("tooltip." + SGearMetalworks.MODID + ".blueprint", "All metal and gem tool parts require casting in a foundry from Productive Metalworks");
         add("entity.productivebees.uru_metal_bee", "Uru Metal Bee");
         add("productivebees.ingredient.description.uru_metal_bee", "To acquire this bee, look up the crafting recipe for its spawn egg.");

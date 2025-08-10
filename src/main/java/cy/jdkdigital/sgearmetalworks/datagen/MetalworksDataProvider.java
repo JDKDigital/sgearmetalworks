@@ -34,6 +34,7 @@ public class MetalworksDataProvider
             gen.addProvider(event.includeClient(), new BlockModelProvider(output));
             gen.addProvider(event.includeClient(), new ItemModelProvider(output, helper));
             gen.addProvider(event.includeServer(), new MaterialsProvider(gen));
+            gen.addProvider(event.includeServer(), new TraitsProvider(gen));
             gen.addProvider(event.includeServer(), new RecipeProvider(output, provider));
             gen.addProvider(event.includeServer(), new BeeProvider(output, provider));
 
@@ -45,6 +46,7 @@ public class MetalworksDataProvider
             gen.addProvider(event.includeServer(), blockTags);
             gen.addProvider(event.includeServer(), new ItemTagProvider(output, provider, blockTags.contentsGetter(), helper));
             gen.addProvider(event.includeServer(), new FluidTagProvider(output, provider, helper));
+            gen.addProvider(event.includeServer(), new DamageTypeTagProvider(output, provider, helper));
             gen.addProvider(event.includeServer(), new DataMapProvider(output, provider));
         }
     }

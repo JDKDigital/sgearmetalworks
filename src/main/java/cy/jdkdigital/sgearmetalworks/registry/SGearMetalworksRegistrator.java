@@ -7,6 +7,8 @@ import cy.jdkdigital.sgearmetalworks.datagen.recipe.GearComponentIngredient;
 import cy.jdkdigital.sgearmetalworks.recipe.SilentGearCastingRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -21,6 +23,8 @@ import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.silentchaos512.gear.api.util.DataResource;
+import net.silentchaos512.gear.gear.trait.Trait;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +35,8 @@ public class SGearMetalworksRegistrator
     public static void register() {}
 
     public static Map<String, Integer> FLUID_COLORS = new HashMap<>();
+
+    public static final DataResource<Trait> NEGATE_STING_TRAIT = DataResource.trait("sting_resist");
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> SG_GEAR_CASTING = SGearMetalworks.RECIPE_SERIALIZERS.register("sg_gear_casting", SilentGearCastingRecipe.Serializer::new);
     public static final DeferredHolder<RecipeType<?>, RecipeType<SilentGearCastingRecipe>> SG_GEAR_CASTING_TYPE = SGearMetalworks.RECIPE_TYPES.register("sg_gear_casting", () -> new RecipeType<>() {});

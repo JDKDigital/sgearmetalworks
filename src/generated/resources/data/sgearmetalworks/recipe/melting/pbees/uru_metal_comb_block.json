@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "productivelib:lazy",
+      "value": {
+        "type": "productivebees:bee_exists",
+        "bee": "productivebees:uru_metal"
+      }
+    }
+  ],
+  "type": "productivemetalworks:item_melting",
+  "ingredient": {
+    "type": "productivebees:component",
+    "components": {
+      "productivebees:bee_type": "productivebees:uru_metal"
+    },
+    "items": "productivebees:configurable_comb"
+  },
+  "maximum_temperature": 30000,
+  "minimum_temperature": 3000,
+  "result": [
+    {
+      "amount": 40,
+      "id": "sgearmetalworks:molten_uru_metal"
+    }
+  ]
+}

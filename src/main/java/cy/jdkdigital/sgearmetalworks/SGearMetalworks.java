@@ -21,6 +21,8 @@ import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.silentchaos512.gear.api.traits.TraitEffectType;
+import net.silentchaos512.gear.setup.SgRegistries;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -43,7 +45,7 @@ public class SGearMetalworks
     public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(Registries.MENU, MODID);
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, MODID);
     public static final DeferredRegister<IngredientType<?>> INGREDIENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.INGREDIENT_TYPES, MODID);
-
+    public static final DeferredRegister<TraitEffectType<?>> TRAIT_EFFECTS = DeferredRegister.create(SgRegistries.TRAIT_EFFECT_TYPE, MODID);
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public SGearMetalworks(IEventBus modEventBus, ModContainer modContainer)

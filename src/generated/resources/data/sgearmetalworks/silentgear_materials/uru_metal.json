@@ -24,14 +24,40 @@
     "name_prefix": ""
   },
   "properties": {
+    "silentgear:coating": {
+      "armor_durability": {
+        "operation": "MULTIPLY_TOTAL",
+        "value": 4.0
+      },
+      "durability": {
+        "operation": "MULTIPLY_TOTAL",
+        "value": 2.5
+      },
+      "enchantment_value": {
+        "operation": "ADD",
+        "value": 500.0
+      },
+      "harvest_tier": {
+        "incorrect_blocks_for_tool": "minecraft:incorrect_for_netherite_tool",
+        "level_hint": "4",
+        "name": "netherite"
+      },
+      "traits": [
+        {
+          "conditions": [],
+          "level": 1,
+          "trait": "silentgear:sting_resist"
+        }
+      ]
+    },
     "silentgear:main": {
       "armor": 42.0,
       "armor/boots": 8.0,
       "armor/chestplate": 14.0,
       "armor/helmet": 8.0,
       "armor/leggings": 12.0,
-      "armor_durability": 5000.0,
-      "armor_toughness": 24.0,
+      "armor_durability": 50000.0,
+      "armor_toughness": 100.0,
       "attack_damage": 12.0,
       "attack_speed": 0.0,
       "charging_value": 1.5,
@@ -39,7 +65,12 @@
       "durability": 15000.0,
       "enchantment_value": 1500.0,
       "harvest_speed": 29.0,
-      "magic_armor": 25.0,
+      "harvest_tier": {
+        "incorrect_blocks_for_tool": "minecraft:incorrect_for_netherite_tool",
+        "level_hint": "4",
+        "name": "netherite"
+      },
+      "magic_armor": 600.0,
       "magic_damage": 11.0,
       "projectile_accuracy": 2.5,
       "projectile_speed": 2.0,
@@ -81,6 +112,11 @@
           "conditions": [],
           "level": 1,
           "trait": "silentgear:cure_poison"
+        },
+        {
+          "conditions": [],
+          "level": 1,
+          "trait": "silentgear:sting_resist"
         }
       ]
     },
