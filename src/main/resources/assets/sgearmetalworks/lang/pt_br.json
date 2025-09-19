@@ -128,7 +128,7 @@
   "material.sgearmetalworks.meat": "Carne",
   "material.sgearmetalworks.uru_metal": "Metal Uru",
   "productivebees.ingredient.description.uru_metal_bee": "Para obter esta abelha, procure a receita de criação do ovo de invocação.",
-  "tooltip.sgearmetalworks.blueprint": "Todas as partes de ferramentas de metal e gema requerem fundição em uma fornalha da Metalurgia Produtiva",
+  "tooltip.sgearmetalworks.blueprint": "Todas as partes de ferramentas de metal e gema requerem fundição em uma fornalha da Productive Metalworks",
   "trait.silentgear.sting_resist": "Resistência a picadas",
   "trait.silentgear.sting_resist.desc": "Picadas de abelha não causam mais dor"
 }
