@@ -146,10 +146,10 @@ dependencies {
     implementation "curse.maven:allthemodium-364466:6135138"
     implementation "curse.maven:geckolib-388172:6027599"
     implementation "curse.maven:ftb-materials-1124942:6117436"
-    implementation "curse.maven:silent-lib-242998:6285150"
+    implementation "curse.maven:silent-lib-242998:6565251"
     implementation "curse.maven:architectury-api-419699:5786327"
-    implementation "curse.maven:silent-gear-297039:6761558"
-    implementation "curse.maven:silents-gems-220311:5846347"
+    implementation "curse.maven:silent-gear-297039:6946008"
+    implementation "curse.maven:silents-gems-220311:6973922"
     implementation "curse.maven:geore-530544:6550861"
 }
 

@@ -333,7 +333,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         for (String material: new String[]{"iron", "golden", "diamond", "netherite"}) {
             for (String gear: new String[]{"axe", "boots", "chestplate", "helmet", "hoe", "leggings", "pickaxe", "shoves", "sword"}) {
                 ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STICK).requires(Items.STICK).unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .save(recipeOutput.withConditions(new NotCondition(new ModLoadedCondition(SGearMetalworks.MODID))), ResourceLocation.fromNamespaceAndPath("silentgear", "gear/convert/" + material + "_" + gear));
+                        .save(recipeOutput.withConditions(new ModLoadedCondition("apotheosis")), ResourceLocation.fromNamespaceAndPath("silentgear", "gear/convert/" + material + "_" + gear));
             }
         }
 

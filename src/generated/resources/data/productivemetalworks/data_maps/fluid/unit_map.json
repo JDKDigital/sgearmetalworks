@@ -24,6 +24,18 @@
         }
       ]
     },
+    "sgearmetalworks:molten_aquamarine": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
     "sgearmetalworks:molten_azure_electrum": {
       "units": [
         {
@@ -140,6 +152,18 @@
         }
       ]
     },
+    "sgearmetalworks:molten_garnet": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
     "sgearmetalworks:molten_heliodor": {
       "units": [
         {
@@ -188,6 +212,30 @@
         }
       ]
     },
+    "sgearmetalworks:molten_opal": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_pearl": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
     "sgearmetalworks:molten_peridot": {
       "units": [
         {
@@ -225,6 +273,18 @@
       ]
     },
     "sgearmetalworks:molten_sapphire": {
+      "units": [
+        {
+          "amount": 100,
+          "unit": "gem"
+        },
+        {
+          "amount": 900,
+          "unit": "block"
+        }
+      ]
+    },
+    "sgearmetalworks:molten_tanzanite": {
       "units": [
         {
           "amount": 100,

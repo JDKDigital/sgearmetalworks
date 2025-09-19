@@ -1,11 +1,8 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:mod_loaded",
-        "modid": "sgearmetalworks"
-      }
+      "type": "neoforge:mod_loaded",
+      "modid": "apotheosis"
     }
   ],
   "parent": "minecraft:recipes/root",

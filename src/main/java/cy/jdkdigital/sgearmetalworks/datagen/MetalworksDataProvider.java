@@ -38,10 +38,6 @@ public class MetalworksDataProvider
             gen.addProvider(event.includeServer(), new RecipeProvider(output, provider));
             gen.addProvider(event.includeServer(), new BeeProvider(output, provider));
 
-            if (ModList.get().isLoaded("patchouli")) {
-                gen.addProvider(true, new GuideBookProvider(output, "en_us", provider));
-            }
-
             BlockTagProvider blockTags = new BlockTagProvider(output, provider, helper);
             gen.addProvider(event.includeServer(), blockTags);
             gen.addProvider(event.includeServer(), new ItemTagProvider(output, provider, blockTags.contentsGetter(), helper));
