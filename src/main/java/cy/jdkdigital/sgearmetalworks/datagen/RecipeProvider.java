@@ -329,14 +329,6 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/alloy_shield"));
 
-        // Disable conversion recipes
-        for (String material: new String[]{"iron", "golden", "diamond", "netherite"}) {
-            for (String gear: new String[]{"axe", "boots", "chestplate", "helmet", "hoe", "leggings", "pickaxe", "shoves", "sword"}) {
-                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STICK).requires(Items.STICK).unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .save(recipeOutput.withConditions(new ModLoadedCondition("apotheosis")), ResourceLocation.fromNamespaceAndPath("silentgear", "gear/convert/" + material + "_" + gear));
-            }
-        }
-
         // Rough recipes
         shapedGear(RecipeCategory.COMBAT, GearItemSets.SWORD.gearItem())
                 .pattern("#")
