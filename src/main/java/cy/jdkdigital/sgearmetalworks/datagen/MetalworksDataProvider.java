@@ -4,12 +4,15 @@ import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber(modid = SGearMetalworks.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -30,6 +33,7 @@ public class MetalworksDataProvider
             CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
             ExistingFileHelper helper = event.getExistingFileHelper();
 
+            gen.addProvider(event.includeServer(), new LootDataProvider(output, List.of(new LootTableProvider.SubProviderEntry(LootDataProvider.LootProvider::new, LootContextParamSets.BLOCK)), provider));
             gen.addProvider(event.includeClient(), new LanguageProvider(output, "en_us"));
             gen.addProvider(event.includeClient(), new BlockModelProvider(output));
             gen.addProvider(event.includeClient(), new ItemModelProvider(output, helper));

@@ -7,7 +7,7 @@
   "minimum_temperature": 3000,
   "result": [
     {
-      "amount": 800,
+      "amount": 810,
       "id": "sgearmetalworks:molten_uru_metal"
     }
   ]

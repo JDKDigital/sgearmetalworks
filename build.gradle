@@ -148,7 +148,7 @@ dependencies {
     implementation "curse.maven:ftb-materials-1124942:6117436"
     implementation "curse.maven:silent-lib-242998:6565251"
     implementation "curse.maven:architectury-api-419699:5786327"
-    implementation "curse.maven:silent-gear-297039:6946008"
+    implementation "curse.maven:silent-gear-297039:7027712"
     implementation "curse.maven:silents-gems-220311:6973922"
     implementation "curse.maven:geore-530544:6550861"
 }

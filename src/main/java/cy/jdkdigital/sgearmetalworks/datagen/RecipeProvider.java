@@ -119,12 +119,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         ), 1, new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 90),
                 recipeOutput.withConditions(new ModLoadedCondition("allthemodium")), "alloying/atm/molten_uru_metal");
 
-        ItemMeltingRecipeBuilder.of(Ingredient.of(ModTags.Items.URU_METAL_STORAGE_BLOCKS), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 800), 3000, 30000)
-                .save(recipeOutput, "melting/uru_metal_block");
+        ItemMeltingRecipeBuilder.of(Ingredient.of(ModTags.Items.URU_METAL_STORAGE_BLOCKS), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 810), 3000, 30000)
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "melting/storage_blocks/uru_metal_block"));
         ItemMeltingRecipeBuilder.of(Ingredient.of(ModTags.Items.URU_METAL_INGOTS), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 90), 3000, 30000)
-                .save(recipeOutput, "melting/uru_metal_ingot");
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "melting/ingots/uru_metal_ingot"));
         ItemMeltingRecipeBuilder.of(Ingredient.of(ModTags.Items.URU_METAL_NUGGETS), new FluidStack(SGearMetalworksRegistrator.MOLTEN_URU_METAL, 10), 3000, 30000)
-                .save(recipeOutput, "melting/uru_metal_nugget");
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProductiveMetalworks.MODID, "melting/nuggets/uru_metal_nugget"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SGearMetalworksRegistrator.URU_METAL_NUGGET.get(), 9)
                 .requires(SGearMetalworksRegistrator.URU_METAL_INGOT.get())

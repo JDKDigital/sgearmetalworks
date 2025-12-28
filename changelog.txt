@@ -1,3 +1,8 @@
+1.21.1-1.4.6
+
++ Fixed Uru melting recipe giving incorrect amount
+
+
 1.21.1-1.4.5
 
 - Re-enabled all tool conversion recipes
