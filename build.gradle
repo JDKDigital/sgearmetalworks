@@ -126,7 +126,6 @@ configurations {
 dependencies {
     implementation "local.libs:productivelib-${lib_version}"
     implementation "local.libs:productivemetalworks-${metalworks_version}"
-    implementation "local.libs:productivebees-1.21.1-13.6.18"
     implementation "xyz.brassgoggledcoders:PatchouliProvider:1.21.1-1.0.11-Snapshot.4"
 
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
@@ -135,7 +134,7 @@ dependencies {
     runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 
     implementation "curse.maven:jade-324717:5884231"
-    implementation "curse.maven:productivebees-377897:6029033"
+    implementation "curse.maven:productivebees-377897:7852443"
     implementation "curse.maven:ato-405593:6118610"
     implementation "curse.maven:allthemodium-364466:6135138"
     implementation "curse.maven:geckolib-388172:6027599"
@@ -146,10 +145,10 @@ dependencies {
     implementation "curse.maven:allthemodium-364466:6135138"
     implementation "curse.maven:geckolib-388172:6027599"
     implementation "curse.maven:ftb-materials-1124942:6117436"
-    implementation "curse.maven:silent-lib-242998:6565251"
     implementation "curse.maven:architectury-api-419699:5786327"
-    implementation "curse.maven:silent-gear-297039:7027712"
-    implementation "curse.maven:silents-gems-220311:6973922"
+    implementation "curse.maven:silent-gear-297039:7870014"
+    implementation "curse.maven:silent-lib-242998:6565251"
+    implementation "curse.maven:silents-gems-220311:7512691"
     implementation "curse.maven:geore-530544:6550861"
 }
 

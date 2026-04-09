@@ -12,6 +12,9 @@
         "item": "silentgear:alloy_ingot"
       },
       {
+        "item": "silentgear:crude_alloy"
+      },
+      {
         "item": "silentgear:super_alloy"
       },
       {
@@ -21,6 +24,9 @@
     [
       {
         "item": "silentgear:alloy_ingot"
+      },
+      {
+        "item": "silentgear:crude_alloy"
       },
       {
         "item": "silentgear:super_alloy"

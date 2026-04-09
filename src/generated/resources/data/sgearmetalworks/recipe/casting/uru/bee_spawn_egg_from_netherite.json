@@ -38,7 +38,7 @@
   },
   "consume_cast": true,
   "fluid": {
-    "amount": 800,
+    "amount": 810,
     "tag": "c:molten_uru_metal"
   },
   "result": {

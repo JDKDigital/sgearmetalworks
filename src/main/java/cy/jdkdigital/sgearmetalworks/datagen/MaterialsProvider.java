@@ -5,11 +5,13 @@ import cy.jdkdigital.sgearmetalworks.SGearMetalworks;
 import cy.jdkdigital.sgearmetalworks.registry.ModTags;
 import cy.jdkdigital.sgearmetalworks.registry.SGearMetalworksRegistrator;
 import cy.jdkdigital.sgearmetalworks.util.CastingMaterialCategories;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
@@ -20,6 +22,7 @@ import net.silentchaos512.gear.api.data.trait.TraitBuilder;
 import net.silentchaos512.gear.api.material.IMaterialCategory;
 import net.silentchaos512.gear.api.material.MaterialCraftingData;
 import net.silentchaos512.gear.api.material.TextureType;
+import net.silentchaos512.gear.api.property.BooleanPropertyValue;
 import net.silentchaos512.gear.api.property.HarvestTier;
 import net.silentchaos512.gear.api.property.HarvestTierPropertyValue;
 import net.silentchaos512.gear.api.property.NumberProperty;
@@ -31,9 +34,11 @@ import net.silentchaos512.gear.gear.material.MaterialCategories;
 import net.silentchaos512.gear.gear.material.SimpleMaterial;
 import net.silentchaos512.gear.gear.trait.condition.MaterialCountTraitCondition;
 import net.silentchaos512.gear.gear.trait.condition.MaterialRatioTraitCondition;
+import net.silentchaos512.gear.gear.trait.condition.NotTraitCondition;
 import net.silentchaos512.gear.gear.trait.condition.OrTraitCondition;
 import net.silentchaos512.gear.gear.trait.effect.FireproofTraitEffect;
 import net.silentchaos512.gear.gear.trait.effect.NegateDamageTraitEffect;
+import net.silentchaos512.gear.item.CraftingItems;
 import net.silentchaos512.gear.setup.SgTags;
 import net.silentchaos512.gear.setup.gear.GearProperties;
 import net.silentchaos512.gear.setup.gear.GearTypes;
@@ -208,7 +213,7 @@ public class MaterialsProvider extends MaterialsProviderBase
     private void addModMetals(Collection<MaterialBuilder<?>> ret) {
         // Azure Electrum
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.AZURE_ELECTRUM)
-                .crafting(SgTags.Items.INGOTS_AZURE_ELECTRUM, MaterialCategories.METAL, MaterialCategories.ENDGAME, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(SgTags.Items.INGOTS_AZURE_ELECTRUM, MaterialCategories.METAL, MaterialCategories.ENDGAME, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0x4575E3, TextureType.HIGH_CONTRAST)
                 //main
                 .mainStatsCommon(1259, 61, 37, 109, 1.5f)
@@ -235,7 +240,7 @@ public class MaterialsProvider extends MaterialsProviderBase
         );
         // Azure Silver
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.AZURE_SILVER)
-                .crafting(SgTags.Items.INGOTS_AZURE_SILVER, MaterialCategories.METAL, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(SgTags.Items.INGOTS_AZURE_SILVER, MaterialCategories.METAL, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xCBBAFF, TextureType.HIGH_CONTRAST)
                 //main
                 .mainStatsCommon(197, 17, 29, 83, 1.4f)
@@ -261,11 +266,11 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .stat(PartTypes.TIP, GearProperties.ATTACK_SPEED, 0.2f, NumberProperty.Operation.ADD)
                 .stat(PartTypes.TIP, GearProperties.RARITY, 31, NumberProperty.Operation.ADD)
                 .trait(PartTypes.TIP, Const.Traits.MALLEABLE, 2)
-                .trait(PartTypes.TIP, Const.Traits.SOFT, 2)
+                .trait(PartTypes.TIP, Const.Traits.FORTUNATE, 3)
         );
         // Blaze Gold
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.BLAZE_GOLD)
-                .crafting(SgTags.Items.INGOTS_BLAZE_GOLD, MaterialCategories.METAL, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(SgTags.Items.INGOTS_BLAZE_GOLD, MaterialCategories.METAL, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xDD8500)
                 //main
                 .mainStatsCommon(69, 9, 24, 45, 1.2f)
@@ -289,7 +294,7 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .stat(PartTypes.TIP, GearProperties.MAGIC_DAMAGE, 1, NumberProperty.Operation.ADD)
                 .stat(PartTypes.TIP, GearProperties.RARITY, 14, NumberProperty.Operation.ADD)
                 .trait(PartTypes.TIP, Const.Traits.SOFT, 2)
-                .trait(PartTypes.TIP, Const.Traits.FIERY, 4)
+                .trait(PartTypes.TIP, Const.Traits.FIERY, 2)
                 //coating
                 .stat(PartTypes.COATING, GearProperties.DURABILITY, -0.05f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .stat(PartTypes.COATING, GearProperties.ARMOR_DURABILITY, -0.05f, NumberProperty.Operation.MULTIPLY_TOTAL)
@@ -299,7 +304,7 @@ public class MaterialsProvider extends MaterialsProviderBase
         );
         // Bronze
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.BRONZE)
-                .crafting(SgTags.Items.INGOTS_BRONZE, MaterialCategories.METAL, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(SgTags.Items.INGOTS_BRONZE, MaterialCategories.METAL, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xD6903B, TextureType.HIGH_CONTRAST)
                 .mainStatsCommon(300, 13, 12, 15, 1.1f)
                 .stat(PartTypes.MAIN, GearProperties.REPAIR_VALUE, 0.15f)
@@ -311,10 +316,19 @@ public class MaterialsProvider extends MaterialsProviderBase
                 // rod
                 .stat(PartTypes.ROD, GearProperties.ATTACK_DAMAGE, 0.05f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .trait(PartTypes.ROD, Const.Traits.FLEXIBLE, 1)
+                //tip
+                .stat(PartTypes.TIP, GearProperties.DURABILITY, 96, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.ARMOR_DURABILITY, 2, NumberProperty.Operation.ADD)
+                .harvestTierBuiltin(PartTypes.TIP)
+                .stat(PartTypes.TIP, GearProperties.HARVEST_SPEED, 0.75f, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.ATTACK_DAMAGE, 0.75f, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.ATTACK_SPEED, 0.1f, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.RARITY, 6, NumberProperty.Operation.ADD)
+                .trait(PartTypes.TIP, Const.Traits.MALLEABLE, 2)
         );
         // Crimson Iron
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.CRIMSON_IRON)
-                .crafting(SgTags.Items.INGOTS_CRIMSON_IRON, MaterialCategories.METAL, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(SgTags.Items.INGOTS_CRIMSON_IRON, MaterialCategories.METAL, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xFF6189, TextureType.HIGH_CONTRAST)
                 //main
                 .mainStatsCommon(420, 27, 14, 31, 0.7f)
@@ -326,6 +340,7 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .mainStatsArmor(3, 7, 5, 3, 2, 6) //18
                 .trait(PartTypes.MAIN, Const.Traits.MALLEABLE, 3)
                 .trait(PartTypes.MAIN, Const.Traits.HARD, 2)
+                .trait(PartTypes.MAIN, Const.Traits.HEAT_RESISTANT, 4)
                 //rod
                 .stat(PartTypes.ROD, GearProperties.ATTACK_DAMAGE, 0.1f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .trait(PartTypes.ROD, Const.Traits.FLEXIBLE, 3)
@@ -340,7 +355,7 @@ public class MaterialsProvider extends MaterialsProviderBase
         );
         // Crimson Steel
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.CRIMSON_STEEL)
-                .crafting(SgTags.Items.INGOTS_CRIMSON_STEEL, MaterialCategories.METAL, MaterialCategories.ENDGAME, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(SgTags.Items.INGOTS_CRIMSON_STEEL, MaterialCategories.METAL, MaterialCategories.ENDGAME, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xDC143C, TextureType.HIGH_CONTRAST)
                 //main
                 .mainStatsCommon(2400, 42, 19, 83, 0.9f)
@@ -367,7 +382,7 @@ public class MaterialsProvider extends MaterialsProviderBase
         );
         // Tyrian Steel
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.TYRIAN_STEEL)
-                .crafting(SgTags.Items.INGOTS_TYRIAN_STEEL, MaterialCategories.METAL, MaterialCategories.ENDGAME, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(SgTags.Items.INGOTS_TYRIAN_STEEL, MaterialCategories.METAL, MaterialCategories.ENDGAME, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xB01080, TextureType.HIGH_CONTRAST)
                 //main
                 .mainStatsCommon(3652, 81, 16, 100, 1.1f)
@@ -393,7 +408,7 @@ public class MaterialsProvider extends MaterialsProviderBase
     private void addVanillaMetals(Collection<MaterialBuilder<?>> ret) {
         // Copper
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.COPPER)
-                .crafting(Tags.Items.INGOTS_COPPER, MaterialCategories.METAL, MaterialCategories.BASIC, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(Tags.Items.INGOTS_COPPER, MaterialCategories.METAL, MaterialCategories.BASIC, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xFD804C, TextureType.HIGH_CONTRAST)
                 //main
                 .mainStatsCommon(151, 12, 15, 12, 1.3f)
@@ -408,10 +423,18 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .stat(PartTypes.ROD, GearProperties.HARVEST_SPEED, 0.2f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .trait(PartTypes.ROD, Const.Traits.BENDING, 3)
                 .trait(PartTypes.ROD, Const.Traits.SOFT, 3)
+                //tip
+                .stat(PartTypes.TIP, GearProperties.DURABILITY, 32, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.ARMOR_DURABILITY, 1, NumberProperty.Operation.ADD)
+                .harvestTierBuiltin(PartTypes.TIP)
+                .stat(PartTypes.TIP, GearProperties.HARVEST_SPEED, 1, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.RARITY, 4, NumberProperty.Operation.ADD)
+                .trait(PartTypes.TIP, Const.Traits.MALLEABLE, 1)
+                .trait(PartTypes.TIP, Const.Traits.DULLING, 1)
         );
         // Gold
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.GOLD)
-                .crafting(Tags.Items.INGOTS_GOLD, MaterialCategories.METAL, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(Tags.Items.INGOTS_GOLD, MaterialCategories.METAL, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xFDFF70, TextureType.HIGH_CONTRAST)
                 //main
                 .mainStatsCommon(32, 7, 22, 50, 1.2f)
@@ -445,13 +468,7 @@ public class MaterialsProvider extends MaterialsProviderBase
         );
         // Iron
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.IRON)
-                .crafting(new MaterialCraftingData(
-                        Ingredient.of(Tags.Items.INGOTS_IRON),
-                        List.of(MaterialCategories.METAL, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING),
-                        List.of(),
-                        Map.of(PartTypes.ROD.get(), Ingredient.of(SgTags.Items.RODS_IRON)),
-                        true
-                ))
+                .craftingWithCommonRod(Tags.Items.INGOTS_IRON, MaterialCategories.METAL, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(Color.VALUE_WHITE, TextureType.HIGH_CONTRAST)
                 //main
                 .mainStatsCommon(250, 15, 14, 20, 0.7f)
@@ -508,7 +525,7 @@ public class MaterialsProvider extends MaterialsProviderBase
     private void addGems(Collection<MaterialBuilder<?>> ret) {
         // Diamond
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.DIAMOND)
-                .crafting(Tags.Items.GEMS_DIAMOND, MaterialCategories.GEM, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(Tags.Items.GEMS_DIAMOND, MaterialCategories.GEM, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0x33EBCB, TextureType.HIGH_CONTRAST)
                 // main
                 .mainStatsCommon(1561, 33, 10, 70, 0.8f)
@@ -540,7 +557,7 @@ public class MaterialsProvider extends MaterialsProviderBase
         );
         // Emerald
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.EMERALD)
-                .crafting(Tags.Items.GEMS_EMERALD, MaterialCategories.GEM, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(Tags.Items.GEMS_EMERALD, MaterialCategories.GEM, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0x00B038, TextureType.HIGH_CONTRAST)
                 // main
                 .mainStatsCommon(1080, 24, 16, 40, 1.0f)
@@ -591,23 +608,9 @@ public class MaterialsProvider extends MaterialsProviderBase
                 // adornment
                 .trait(PartTypes.SETTING, Const.Traits.LUCKY, 3, new MaterialRatioTraitCondition(0.75f))
         );
-        // Prismarine
-//        ret.add(MaterialBuilder.simple(modId("prismarine"))
-//                .crafting(Tags.Items.GEMS_PRISMARINE, MaterialCategories.GEM, MaterialCategories.ORGANIC, MaterialCategories.ADVANCED, CastingMaterialCategories.CASTING)
-//                .displayWithDefaultName(TextUtil.translate("material", "prismarine"), 0x91C5B7, TextureType.HIGH_CONTRAST)
-//                // coating
-//                .stat(PartTypes.COATING, GearProperties.DURABILITY, 0.075f, NumberProperty.Operation.MULTIPLY_TOTAL)
-//                .stat(PartTypes.COATING, GearProperties.ARMOR_DURABILITY, 0.125f, NumberProperty.Operation.MULTIPLY_TOTAL)
-//                .stat(PartTypes.COATING, GearProperties.ARMOR_TOUGHNESS, 1, NumberProperty.Operation.ADD)
-//                .stat(PartTypes.COATING, GearProperties.KNOCKBACK_RESISTANCE, 0.25f, NumberProperty.Operation.ADD)
-//                .trait(PartTypes.COATING, Const.Traits.AQUATIC, 5, new MaterialRatioTraitCondition(0.67f))
-//                .trait(PartTypes.COATING, Const.Traits.AQUATIC, 3, new NotTraitCondition(new MaterialRatioTraitCondition(0.67f)))
-//                // adornment
-//                .trait(PartTypes.SETTING, Const.Traits.SWIFT_SWIM, 3, new MaterialRatioTraitCondition(0.67f))
-//        );
         // Quartz
         ret.add(MaterialBuilder.builtin(BuiltinMaterials.QUARTZ)
-                .crafting(Tags.Items.GEMS_QUARTZ, MaterialCategories.GEM, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
+                .craftingWithCommonRod(Tags.Items.GEMS_QUARTZ, MaterialCategories.GEM, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xD4CABA, TextureType.HIGH_CONTRAST)
                 // main
                 .mainStatsCommon(330, 13, 10, 40, 1.2f)
@@ -624,7 +627,7 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .trait(PartTypes.ROD, Const.Traits.BRITTLE, 3)
                 // tip
                 .stat(PartTypes.TIP, GearProperties.DURABILITY, 64, NumberProperty.Operation.ADD)
-                .stat(PartTypes.TIP, GearProperties.ARMOR_DURABILITY, 64, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.ARMOR_DURABILITY, 4, NumberProperty.Operation.ADD)
                 .harvestTierBuiltin(PartTypes.TIP)
                 .stat(PartTypes.TIP, GearProperties.HARVEST_SPEED, 2, NumberProperty.Operation.ADD)
                 .stat(PartTypes.TIP, GearProperties.ATTACK_DAMAGE, 4, NumberProperty.Operation.ADD)
@@ -661,6 +664,15 @@ public class MaterialsProvider extends MaterialsProviderBase
         ret.add(MaterialBuilder.simple(DataResource.material(ResourceLocation.fromNamespaceAndPath("silentgear", "glowstone")))
                 .crafting(Tags.Items.DUSTS_GLOWSTONE, MaterialCategories.GEM, MaterialCategories.DUST, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xD2D200, TextureType.HIGH_CONTRAST)
+                // main (additive)
+                .stat(PartTypes.MAIN, GearProperties.ADDITIVE, new BooleanPropertyValue(true))
+                .stat(PartTypes.MAIN, GearProperties.CHARGING_VALUE, 0.15f, NumberProperty.Operation.MULTIPLY_BASE)
+                .stat(PartTypes.MAIN, GearProperties.RARITY, 40)
+                .stat(PartTypes.MAIN, GearProperties.HARVEST_SPEED, 15)
+                .stat(PartTypes.MAIN, GearProperties.ATTACK_DAMAGE, 3)
+                .stat(PartTypes.MAIN, GearProperties.ATTACK_SPEED, 0.4f)
+                .stat(PartTypes.MAIN, GearProperties.RANGED_DAMAGE, 3)
+                .trait(PartTypes.MAIN, Const.Traits.RENEW, 3)
                 //tip
                 .stat(PartTypes.TIP, GearProperties.HARVEST_SPEED, 0.4f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .stat(PartTypes.TIP, GearProperties.ATTACK_DAMAGE, 2, NumberProperty.Operation.ADD)
@@ -672,19 +684,27 @@ public class MaterialsProvider extends MaterialsProviderBase
         );
         // Redstone
         ret.add(MaterialBuilder.simple(DataResource.material(ResourceLocation.fromNamespaceAndPath("silentgear", "redstone")))
-                .crafting(Tags.Items.DUSTS_REDSTONE, MaterialCategories.GEM, MaterialCategories.DUST, CastingMaterialCategories.CASTING)
+                .crafting(Tags.Items.DUSTS_REDSTONE, MaterialCategories.METAL, MaterialCategories.DUST, MaterialCategories.INTERMEDIATE, CastingMaterialCategories.CASTING)
                 .displayWithDefaultName(0xBB0000, TextureType.HIGH_CONTRAST)
+                // main (additive)
+                .stat(PartTypes.MAIN, GearProperties.ADDITIVE, new BooleanPropertyValue(true))
+                .stat(PartTypes.MAIN, GearProperties.ENCHANTMENT_VALUE, -0.1f, NumberProperty.Operation.MULTIPLY_BASE)
+                .stat(PartTypes.MAIN, GearProperties.CHARGING_VALUE, 0.1f, NumberProperty.Operation.MULTIPLY_BASE)
+                .stat(PartTypes.MAIN, GearProperties.RARITY, 30)
+                .stat(PartTypes.MAIN, GearProperties.HARVEST_SPEED, 12)
+                .stat(PartTypes.MAIN, GearProperties.ATTACK_DAMAGE, 4)
+                .stat(PartTypes.MAIN, GearProperties.RANGED_DAMAGE, 2)
+                .trait(PartTypes.MAIN, Const.Traits.IMPERIAL, 3)
                 //tip
                 .stat(PartTypes.TIP, GearProperties.HARVEST_SPEED, 0.2f, NumberProperty.Operation.MULTIPLY_TOTAL)
                 .stat(PartTypes.TIP, GearProperties.ATTACK_DAMAGE, 2, NumberProperty.Operation.ADD)
-                .stat(PartTypes.TIP, GearProperties.ATTACK_SPEED, 0.5f, NumberProperty.Operation.ADD)
+                .stat(PartTypes.TIP, GearProperties.ATTACK_SPEED, 0.3f, NumberProperty.Operation.ADD)
                 .stat(PartTypes.TIP, GearProperties.RANGED_DAMAGE, 2, NumberProperty.Operation.ADD)
                 .stat(PartTypes.TIP, GearProperties.RARITY, 10, NumberProperty.Operation.ADD)
         );
     }
 
     private void addExtraMetals(Collection<MaterialBuilder<?>> ret) {
-        // Aluminum
         ret.add(extraMetal("aluminum", 2, commonId("ingots/aluminum"))
                 .displayWithDefaultName(0xBFD4DE, TextureType.HIGH_CONTRAST)
                 .stat(PartTypes.MAIN, GearProperties.DURABILITY, 365)
@@ -1067,31 +1087,6 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .trait(PartTypes.ROD, Const.Traits.MALLEABLE, 2)
                 .trait(PartTypes.ROD, Const.Traits.SOFT, 1)
         );
-        // Titanium
-//        ret.add(extraMetal("titanium", 4, commonId("ingots/titanium"))
-//                .displayWithDefaultName(0x2E4CE6, TextureType.HIGH_CONTRAST)
-//                .stat(PartTypes.MAIN, GearProperties.DURABILITY, 1600)
-//                .stat(PartTypes.MAIN, GearProperties.ARMOR_DURABILITY, 37)
-//                .stat(PartTypes.MAIN, GearProperties.ENCHANTMENT_VALUE, 12)
-//                .stat(PartTypes.MAIN, GearProperties.HARVEST_TIER, HarvestTier.NETHERITE)
-//                .stat(PartTypes.MAIN, GearProperties.HARVEST_SPEED, 8)
-//                .stat(PartTypes.MAIN, GearProperties.ATTACK_DAMAGE, 6f)
-//                .stat(PartTypes.MAIN, GearProperties.MAGIC_DAMAGE, 1f)
-//                .stat(PartTypes.MAIN, GearProperties.ATTACK_SPEED, 0.0f)
-//                .mainStatsArmor(4, 9, 7, 4, 8, 4) //24
-//                .stat(PartTypes.MAIN, GearProperties.RANGED_DAMAGE, 1f)
-//                .stat(PartTypes.MAIN, GearProperties.DRAW_SPEED, -0.2f)
-//                .stat(PartTypes.MAIN, GearProperties.RARITY, 80)
-//                .stat(PartTypes.MAIN, GearProperties.CHARGING_VALUE, 1.0f)
-//                .stat(PartTypes.ROD, GearProperties.DURABILITY, 0.1f, NumberProperty.Operation.MULTIPLY_TOTAL)
-//                .stat(PartTypes.ROD, GearProperties.ATTACK_DAMAGE, 0.2f, NumberProperty.Operation.MULTIPLY_TOTAL)
-//                .stat(PartTypes.ROD, GearProperties.ATTACK_DAMAGE, 2, NumberProperty.Operation.ADD)
-//                .stat(PartTypes.ROD, GearProperties.RARITY, 80)
-//                .trait(PartTypes.MAIN, Const.Traits.MALLEABLE, 2)
-//                .trait(PartTypes.MAIN, Const.Traits.HARD, 4)
-//                .trait(PartTypes.ROD, Const.Traits.FLEXIBLE, 2)
-//                .trait(PartTypes.ROD, Const.Traits.HARD, 4)
-//        );
         // Uranium
         ret.add(extraMetal("uranium", 3, commonId("ingots/uranium"))
                 .displayWithDefaultName(0x21FF0F, TextureType.HIGH_CONTRAST)
@@ -1297,7 +1292,7 @@ public class MaterialsProvider extends MaterialsProviderBase
                 .mainStatsArmor(3, 6, 5, 2, 4, 8) //16
                 .noProperties(PartTypes.ROD)
                 .noProperties(PartTypes.SETTING)
-                .trait(PartTypes.MAIN, GemsTraits.CRITICAL_STRIKE, 1)
+                .trait(PartTypes.MAIN, GemsTraits.CRITICAL_STRIKE, 3)
                 .trait(PartTypes.MAIN, Const.Traits.BRITTLE, 3)
         );
         ret.add(gem(Gems.BLACK_DIAMOND, MaterialCategories.ADVANCED) // super
@@ -1325,6 +1320,63 @@ public class MaterialsProvider extends MaterialsProviderBase
                         new MaterialRatioTraitCondition(0.7f))
                 .trait(PartTypes.MAIN, Const.Traits.STURDY, 2)
                 .trait(PartTypes.SETTING, Const.Traits.MOONWALKER, 2)
+        );
+        ret.add(gem(Gems.GARNET, MaterialCategories.INTERMEDIATE) // damage
+                .mainStatsCommon(512, 21, 12, 40, 1.3f)
+                .mainStatsHarvest(harvestTier(Gems.PERIDOT), 6) // iron
+                .mainStatsMelee(3, 0, 0)
+                .mainStatsRanged(2, 0)
+                .mainStatsArmor(2, 6, 5, 2, 4, 6) //15
+                .trait(PartTypes.MAIN, GemsTraits.CRITICAL_STRIKE, 1)
+                .trait(PartTypes.ROD, Const.Traits.JAGGED, 3)
+                .trait(PartTypes.ROD, Const.Traits.BRITTLE, 3)
+                .trait(PartTypes.SETTING, GemsTraits.POWER, 2)
+        );
+        ret.add(gem(Gems.AQUAMARINE, MaterialCategories.INTERMEDIATE) // durability
+                .mainStatsCommon(1024, 34, 12, 40, 1.3f)
+                .mainStatsHarvest(harvestTier(Gems.AQUAMARINE), 6) // iron
+                .mainStatsMelee(2, 0, 0)
+                .mainStatsRanged(1, 0)
+                .mainStatsArmor(2, 6, 5, 2, 4, 6) //15
+                .trait(PartTypes.MAIN, Const.Traits.FORTUNATE, 1)
+                .trait(PartTypes.ROD, Const.Traits.FORTUNATE, 1)
+                .trait(PartTypes.ROD, Const.Traits.BRITTLE, 3)
+                .trait(PartTypes.SETTING, GemsTraits.STEP_UP, 1)
+        );
+        ret.add(gem(Gems.TANZANITE, MaterialCategories.INTERMEDIATE) // all-rounder
+                .mainStatsCommon(768, 28, 15, 50, 1.2f)
+                .mainStatsHarvest(harvestTier(Gems.TANZANITE), 9) // diamond
+                .mainStatsMelee(2, 0, 0)
+                .mainStatsRanged(2, 0)
+                .mainStatsArmor(3, 8, 5, 2, 5, 10) //18
+                .trait(PartTypes.MAIN, Const.Traits.LIGHT, 2)
+                .trait(PartTypes.ROD, Const.Traits.SHARP, 2)
+                .trait(PartTypes.ROD, Const.Traits.BRITTLE, 3)
+                .trait(PartTypes.SETTING, GemsTraits.TWINKLETOES, 4)
+        );
+        ret.add(gem(Gems.OPAL, MaterialCategories.ADVANCED) // speed/armor
+                .mainStatsCommon(1024, 36, 10, 60, 1.3f)
+                .mainStatsHarvest(harvestTier(Gems.OPAL), 13) // diamond
+                .mainStatsMelee(2, 0, 0)
+                .mainStatsRanged(1, 0)
+                .mainStatsArmor(3, 8, 5, 2, 4, 8) //18
+                .trait(PartTypes.MAIN, GemsTraits.FREEZE_RESISTANT, 4)
+                .trait(PartTypes.MAIN, GemsTraits.ENDERBANE, 2)
+                .trait(PartTypes.ROD, Const.Traits.BRITTLE, 3)
+                .trait(PartTypes.ROD, GemsTraits.ENDERBANE, 4)
+                .trait(PartTypes.SETTING, GemsTraits.HASTY, 3)
+        );
+        ret.add(gem(Gems.PEARL, MaterialCategories.ADVANCED) // armor
+                .mainStatsCommon(1024, 44, 12, 65, 1.3f)
+                .mainStatsHarvest(harvestTier(Gems.PEARL), 8) // diamond
+                .mainStatsMelee(2, 0, 0)
+                .mainStatsRanged(2, 0)
+                .mainStatsArmor(3, 8, 6, 3, 12, 16) //20
+                .noProperties(PartTypes.SETTING)
+                .trait(PartTypes.MAIN, GemsTraits.NEPTUNES_BLESSING, 3)
+                .trait(PartTypes.ROD, Const.Traits.AQUATIC, 4)
+                .trait(PartTypes.ROD, Const.Traits.BRITTLE, 3)
+                .trait(PartTypes.SETTING, GemsTraits.NEPTUNES_BLESSING, 4)
         );
     }
 

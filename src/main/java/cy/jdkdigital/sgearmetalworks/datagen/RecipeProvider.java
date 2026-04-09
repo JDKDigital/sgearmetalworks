@@ -154,9 +154,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         georeCompat(recipeOutput);
 
         // Uru metal bee
-        ItemCastingRecipeBuilder.of(ComponentIngredient.of(getBeeSpawnEgg("productivebees:beebee")), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_URU_METAL, 800), getBeeSpawnEgg("productivebees:uru_metal"), true)
+        ItemCastingRecipeBuilder.of(ComponentIngredient.of(getBeeSpawnEgg("productivebees:beebee")), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_URU_METAL, 810), getBeeSpawnEgg("productivebees:uru_metal"), true)
                 .save(recipeOutput.withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:beebee")))).withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:uru_metal")))), ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/uru/bee_spawn_egg_from_bee"));
-        ItemCastingRecipeBuilder.of(ComponentIngredient.of(getBeeSpawnEgg("productivebees:netherite")), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_URU_METAL, 800), getBeeSpawnEgg("productivebees:uru_metal"), true)
+        ItemCastingRecipeBuilder.of(ComponentIngredient.of(getBeeSpawnEgg("productivebees:netherite")), SizedFluidIngredient.of(ModTags.Fluids.MOLTEN_URU_METAL, 810), getBeeSpawnEgg("productivebees:uru_metal"), true)
                 .save(recipeOutput.withConditions(new NotCondition(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:beebee"))))).withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:netherite")))).withConditions(new LazyCondition(new BeeExistsCondition(ResourceLocation.parse("productivebees:uru_metal")))), ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "casting/uru/bee_spawn_egg_from_netherite"));
 
         var combStack = ModItems.CONFIGURABLE_HONEYCOMB.get().getDefaultInstance();
@@ -322,10 +322,10 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
                 .requires(PartMaterialIngredient.of(PartTypes.MAIN.get(), GearTypes.SHIELD.get()).not(CastingMaterialCategories.CASTING).not(CastingMaterialCategories.INFUSING), 2)
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .save(recipeOutput, SilentGear.getId("gear/shield_quick"));
-        // alloy shield parts
+        // Alloy shield
         shapelessGear(RecipeCategory.TOOLS, GearItemSets.SHIELD.gearItem())
                 .requires(BlueprintIngredient.of(GearItemSets.SHIELD))
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 2)
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 2)
                 .requires(GearPartIngredient.of(PartTypes.ROD.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/alloy_shield"));
 
@@ -390,11 +390,11 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         // alloy tip and rod
         shapelessPart(RecipeCategory.TOOLS, SgItems.ROD)
                 .requires(BlueprintIngredient.of(SgItems.ROD_BLUEPRINT.get()))
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 2)
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 2)
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "part/rod"));
         shapelessPart(RecipeCategory.TOOLS, SgItems.TIP)
                 .requires(BlueprintIngredient.of(SgItems.TIP_BLUEPRINT.get()))
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "part/tip"));
     }
 
@@ -414,7 +414,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         // alloy gear parts
         shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + name + "_head"));
     }
 
@@ -435,7 +435,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
                 .requires(Items.HEAVY_CORE)
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 3)
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), 3)
                 .save(output, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/mace_core"));
     }
 
@@ -455,7 +455,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         // alloy gear parts
         shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + name + "_main"));
     }
 
@@ -475,7 +475,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         // alloy gear parts
         shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM))
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + name + "_head"));
     }
 
@@ -487,7 +487,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         // alloy gear parts
         shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + NameUtils.fromItem(itemSet.mainPart()).getPath() + "_head"));
     }
 
@@ -505,7 +505,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider im
         // alloy gear parts
         shapelessPart(RecipeCategory.TOOLS, itemSet.mainPart())
                 .requires(BlueprintIngredient.of(itemSet))
-                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
+                .requires(Ingredient.of(SgItems.ALLOY_INGOT, SgItems.CRUDE_ALLOY, SgItems.SUPER_ALLOY, SgItems.HYBRID_GEM), mainCount)
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(SGearMetalworks.MODID, "gear/" + name + "_main_only"));
     }
 
